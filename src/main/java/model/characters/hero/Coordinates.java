@@ -1,8 +1,11 @@
 package model.characters.hero;
 
+import lombok.Data;
+
 /**
  * Created by msemenov on 11/14/18.
  */
+@Data
 public class Coordinates {
     private int x;
     private int y;

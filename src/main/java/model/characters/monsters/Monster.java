@@ -16,6 +16,11 @@ public class Monster  extends Characters{
         super(hp, damage, defense);
         this.name = name;
     }
-
+    public String toString(){
+        return "Monster name :"  + this.getName() + "\n"+
+        "Monster stats:\n" + "Damage: " + this.getDamage() + "\n"+
+        "Defense: " + this.getDefense() + "\n" +
+        "Health Point: " + this.getHpMax();
+    }
 
 }

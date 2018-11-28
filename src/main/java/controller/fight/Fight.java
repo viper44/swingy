@@ -3,11 +3,7 @@ package controller.fight;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import model.characters.Characters;
-import model.characters.hero.Hero;
-import model.characters.monsters.Monster;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Random;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -21,9 +17,10 @@ public class Fight {
          Fight.swap(hero, monster);
          while(first.getHpCur() > 0 && sec.getHpCur() > 0){
              Fight.swap(hero, monster);
-             sec.setHpCur(sec.getHpCur() + sec.getDefense() - first.getDamage());
+             int damage = sec.getDefense() - first.getDamage() > 0 ? 0 : sec.getDefense() - first.getDamage();
+             sec.setHpCur(sec.getHpCur() + damage);
              System.out.println(first.getName() + " hits " + sec.getName() + " with " +
-                     (first.getDamage() - sec.getDefense()) + " " + sec.getName() +
+                     damage * -1 + " " + sec.getName() +
                      " current hp = " + sec.getHpCur() + "/" + sec.getHpMax());
         }
     }
