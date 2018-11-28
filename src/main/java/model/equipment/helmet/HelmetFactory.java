@@ -23,12 +23,14 @@ public abstract class HelmetFactory {
 
         }
     public static <H extends Helmet> H newHelmet(Class<? extends Equipment> HelmetClass){
-        return (H) HELMET_CREATOR.get(HelmetClass).apply((int)(Math.random()*((50-10)+1)) + 10);
+        int hp = new Random().nextInt(50 - 30) + 30;
+        return (H) HELMET_CREATOR.get(HelmetClass).apply(hp);
     }
 
     public static <H extends Helmet> H newHelmet(){
         int index = new Random().nextInt(helmets.size());
-        return (H) HELMET_CREATOR.get(helmets.get(index)).apply((int)(Math.random()*((50-10)+1)) + 10);
+        int hp = new Random().nextInt(50 - 30) + 30;
+        return (H) HELMET_CREATOR.get(helmets.get(index)).apply(hp);
     }
 
 }

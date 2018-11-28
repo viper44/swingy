@@ -13,10 +13,4 @@ public class Characters {
     int defense;
     String name;
 
-    public Characters(int hp, int damage, int defense){
-        this.hpCur = hp;
-        this.hpMax = hp;
-        this.damage = damage;
-        this.defense = defense;
-    }
 }

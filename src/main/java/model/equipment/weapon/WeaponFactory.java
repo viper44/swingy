@@ -23,11 +23,13 @@ public abstract class WeaponFactory {
     }
 
     public static <W  extends Weapon> W newWeapon(Class <? extends Equipment> weaponClass){
-        return (W)WEAPON_CREATOR.get(weaponClass).apply((int)(Math.random()*((50-10)+1)) + 10);
+        int damage = new Random().nextInt(60 - 30) + 30;
+        return (W)WEAPON_CREATOR.get(weaponClass).apply(damage);
         }
 
     public static <W  extends Weapon> W newWeapon(){
         int index = new Random().nextInt(weapons.size());
-        return (W)WEAPON_CREATOR.get(weapons.get(index)).apply((int)(Math.random()*((50-10)+1)) + 10);
+        int damage = new Random().nextInt(60 - 30) + 30;
+        return (W)WEAPON_CREATOR.get(weapons.get(index)).apply(damage);
     }
     }

@@ -24,10 +24,12 @@ public abstract class ArmorFactory {
     }
 
         static public <A extends Armor>  A newArmor(Class<? extends Equipment> ArmorClass){
-            return (A) ARMOR_SUPPLIER.get(ArmorClass).apply((int)(Math.random()*((15-5)+1)) + 5);
+        int defense = new Random().nextInt(11 - 5) + 5;
+            return (A) ARMOR_SUPPLIER.get(ArmorClass).apply(defense);
         }
     static public <A extends Armor>  A newArmor(){
         int index = new Random().nextInt(armors.size());
-        return (A) ARMOR_SUPPLIER.get(armors.get(index)).apply((int)(Math.random()*((15-5)+1)) + 5);
+        int defense = new Random().nextInt(11 - 5) + 5;
+        return (A) ARMOR_SUPPLIER.get(armors.get(index)).apply(defense);
     }
     }

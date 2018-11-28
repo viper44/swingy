@@ -2,6 +2,8 @@ package model;
 
 import controller.GameOwner;
 import model.characters.hero.*;
+import model.equipment.weapon.Staff;
+import model.equipment.weapon.WeaponFactory;
 import view.View;
 import view.console.ViewConsole;
 
@@ -14,11 +16,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-        View view = new ViewConsole();
-        GameOwner game = GameOwner.getOwner();
-        game.setViewGui(view);
-        game.startGame();
-        System.out.println(game.getHero());
+        Hero albert = new Hero.HeroBuilder()
+                .heroName("pavlo")
+                .exp(0)
+                .level(1)
+                .coordinates(new Coordinates(5, 5))
+                .build(example.get("SpellHowler"));
+        System.out.println(albert);
+        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
+        System.out.println(albert);
+        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
+        System.out.println(albert);
+
+//        View view = new ViewConsole();
+//        GameOwner game = GameOwner.getOwner();
+//        game.setViewGui(view);
+//        game.startGame();
+//        System.out.println(game.getHero());
       //  game.initMenu();
         //.game.regHero();
 

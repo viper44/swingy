@@ -94,6 +94,7 @@ public class GameOwner {
         Fight.figthMode(hero, monster);
         if (hero.getHpCur() > 0){
             hero.getLoot(Loot.getLoot());
+            hero.updateConditions();
         }
     }
 

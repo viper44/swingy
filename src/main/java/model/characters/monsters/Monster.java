@@ -13,7 +13,9 @@ public class Monster  extends Characters{
     String name;
 
     public Monster(int hp, int damage, int defense, String name){
-        super(hp, damage, defense);
+        this.setHpCur(hp);
+        this.setDamage(damage);
+        this.setDefense(defense);
         this.name = name;
     }
     public String toString(){
