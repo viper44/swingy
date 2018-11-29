@@ -16,22 +16,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Hero albert = new Hero.HeroBuilder()
-                .heroName("pavlo")
-                .exp(0)
-                .level(1)
-                .coordinates(new Coordinates(5, 5))
-                .build(example.get("SpellHowler"));
-        System.out.println(albert);
-        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
-        System.out.println(albert);
-        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
-        System.out.println(albert);
+//        Hero albert = new Hero.HeroBuilder()
+//                .heroName("pavlo")
+//                .exp(0)
+//                .level(1)
+//                .coordinates(new Coordinates(5, 5))
+//                .build(example.get("SpellHowler"));
+//        System.out.println(albert);
+//        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
+//        System.out.println(albert);
+//        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));
+//        System.out.println(albert);
 
-//        View view = new ViewConsole();
-//        GameOwner game = GameOwner.getOwner();
-//        game.setViewGui(view);
-//        game.startGame();
+        View view = new ViewConsole();
+        GameOwner game = GameOwner.getOwner();
+        game.setViewGui(view);
+        game.startGame();
 //        System.out.println(game.getHero());
       //  game.initMenu();
         //.game.regHero();

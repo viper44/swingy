@@ -14,6 +14,7 @@ public class Monster  extends Characters{
 
     public Monster(int hp, int damage, int defense, String name){
         this.setHpCur(hp);
+        this.setHpMax(hp);
         this.setDamage(damage);
         this.setDefense(defense);
         this.name = name;
@@ -22,7 +23,7 @@ public class Monster  extends Characters{
         return "Monster name :"  + this.getName() + "\n"+
         "Monster stats:\n" + "Damage: " + this.getDamage() + "\n"+
         "Defense: " + this.getDefense() + "\n" +
-        "Health Point: " + this.getHpMax();
+        "Health Point: " + this.getHpCur();
     }
 
 }

@@ -16,6 +16,11 @@ public class Fight {
 
          Fight.swap(hero, monster);
          while(first.getHpCur() > 0 && sec.getHpCur() > 0){
+             try{
+                 Thread.sleep(1000);
+             } catch (InterruptedException e){
+
+             }
              Fight.swap(hero, monster);
              int damage = sec.getDefense() - first.getDamage() > 0 ? 0 : sec.getDefense() - first.getDamage();
              sec.setHpCur(sec.getHpCur() + damage);
@@ -23,6 +28,7 @@ public class Fight {
                      damage * -1 + " " + sec.getName() +
                      " current hp = " + sec.getHpCur() + "/" + sec.getHpMax());
         }
+        checker =  new Random().nextInt(10);
     }
 
         public Fight() {

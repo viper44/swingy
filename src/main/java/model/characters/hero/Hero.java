@@ -35,21 +35,24 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
 
     @Override
     public String toString() {
-        return "Hero{" +
-                "heroName='" + nameH + '\'' +
-                ", weapon=" + weapon +
-                ", armor=" + armor +
-                ", helmet=" + helmet +
-                ", level=" + level +
-                ", exp=" + exp +
-                ", coordinates=" + coordinates +
-                super.toString() +
-                '}';
+        return "Hero name :"  + this.getName() + "\n"+
+                "Hero stats:\n" + "Damage: " + this.getDamage() + "\n"+
+                "Defense: " + this.getDefense() + "\n" +
+                "Max Health Point: " + this.getHpMax() + "\n" +
+                "Current health point: " + this.getHpCur() + "\n" +
+                "Exp : " + this.exp + "\n" +
+                "Hero level: " + this.level + "\n" +
+                "Weapon : " + this.weapon + "\n" +
+                "Armor : " + this.armor + "\n" +
+                "Helmet : " + this.helmet;
     }
     public void updateConditions(){
         this.setExp(this.getExp() + (600 * this.level / 2));
         if(this.getExp() >= lvlCheck.apply(level)){
-            this.setLevel(level++);
+            this.setLevel(++level);
+            setHeroDamage();
+            setHeroDefense();
+            setHeroHp();
         }
     }
 
@@ -60,13 +63,16 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
             this.helmet = helmet;
             this.setHeroHp();
             this.setHeroDamage();
-            this.setHpCur(this.getHeroHp() + (10 * this.level) + helmet.getHp());
-            this.setHpMax(this.getHpCur());
-            this.setDefense(this.getHeroDefense() + (2 * this.level) + armor.getDefense());
+            this.setHeroDefense();
         }
         public void setHeroDamage(){
             this.setHeroDamage(10 + (5 * this.level));
             this.setDamage(this.getHeroDamage() + this.weapon.getDmg());
+        }
+
+        private void setHeroDefense(){
+            this.setHeroDefense(2 + (2 * this.level));
+            this.setDefense(heroDefense + armor.getDefense());
         }
 
         public void setHeroHp(){
@@ -87,7 +93,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
 
         public void setHelmet(Helmet helmet){
             this.helmet = helmet;
-            this.setHpCur(this.getHpCur());
+            this.setHpMax(this.heroHp + this.helmet.getHp());
         }
         public Hero setNameH(String heroname){
         this.nameH = heroname;

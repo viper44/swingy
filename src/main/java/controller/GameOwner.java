@@ -60,6 +60,7 @@ public class GameOwner {
         move();
     }
     private void move(){
+        System.out.println(hero);
         while(true){
             makeMove();
             isHereMonster();
@@ -91,21 +92,23 @@ public class GameOwner {
 
     }
     private void fight(){
+        System.out.println(hero);
         Fight.figthMode(hero, monster);
         if (hero.getHpCur() > 0){
             hero.getLoot(Loot.getLoot());
             hero.updateConditions();
+            System.out.println(hero);
         }
     }
 
     private void makeMove() {
         switch (view.moveView.drawMap(hero.getLevel())){
             case "South" : {
-                hero.getCoordinates().setY(hero.getCoordinates().getY() - 1);
+                hero.getCoordinates().setY(hero.getCoordinates().getY() + 1);
                 break;
             }
             case "North" : {
-                hero.getCoordinates().setY(hero.getCoordinates().getY() + 1);
+                hero.getCoordinates().setY(hero.getCoordinates().getY() - 1);
                 break;
             }
             case "West" : {
