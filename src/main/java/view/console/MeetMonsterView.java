@@ -16,12 +16,12 @@ public class MeetMonsterView {
     private String chooseCommand() {
         System.out.print("Enter command Run or Fight: ");
         Scanner sc = new Scanner(System.in);
-        if(sc.hasNext("\\s*(Run|Fight)\\s*")){
-            return sc.nextLine();
-        } else {
+        while(!sc.hasNext("\\s*(Run|Fight)\\s*"))
+        {
             System.out.println("You enter wrong command");
-            chooseCommand();
+            sc.nextLine();
+            System.out.print("Enter command Run or Fight: ");
         }
-        return null;
+        return sc.nextLine();
     }
 }

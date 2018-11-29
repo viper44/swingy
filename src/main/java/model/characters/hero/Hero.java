@@ -57,7 +57,6 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
     }
 
     public Hero(Weapon weapon, Armor armor, Helmet helmet) {
-            //this.setHeroHp(50 + (10 * this.level));
             this.weapon = weapon;
             this.armor = armor;
             this.helmet = helmet;

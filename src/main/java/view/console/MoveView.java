@@ -48,16 +48,15 @@ public class MoveView {
     }
 
     private String daWaeGetter() {
-        String way = null;
         System.out.println("do you know da wae?");
         System.out.print("Please choose da wae (North, South, West, East): " );
         Scanner sc = new Scanner(System.in);
-        if (sc.hasNext("\\s*(North|South|East|West)\\s*")){
-            way = sc.nextLine();
-        } else {
-            System.out.println("Wrong input. Please choose de wae");
-            daWaeGetter();
-        }
-        return way;
+        while(!sc.hasNext("\\s*(North|South|East|West)\\s*"))
+       {
+           System.out.println("You enter wrong way");
+           sc.nextLine();
+           System.out.print("Please choose da wae (North, South, West, East): " );
+       }
+        return sc.nextLine();
     }
 }
