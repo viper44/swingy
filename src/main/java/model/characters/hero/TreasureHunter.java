@@ -1,16 +1,13 @@
 package model.characters.hero;
 
-import model.equipment.Armor.Armor;
-import model.equipment.Armor.ArmorFactory;
-import model.equipment.Armor.LightArmor;
-import model.equipment.Armor.Tunic;
+import model.equipment.armor.Armor;
+import model.equipment.armor.ArmorFactory;
+import model.equipment.armor.LightArmor;
 import model.equipment.Equipment;
 import model.equipment.helmet.Chub;
-import model.equipment.helmet.Crown;
 import model.equipment.helmet.Helmet;
 import model.equipment.helmet.HelmetFactory;
 import model.equipment.weapon.Dagger;
-import model.equipment.weapon.Staff;
 import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 

@@ -1,4 +1,4 @@
-package model.equipment.weapon;
+package model.equipment.armor;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -15,20 +15,19 @@ import javax.persistence.Id;
 /**
  * Created by msemenov on 11/14/18.
  */
-@Entity
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @DynamicInsert
 @DynamicUpdate
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Weapon extends Equipment {
+@Entity
+public class Armor extends Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    private int dmg;
+    private int defense;
 
-     Weapon(int dmg){
-        this.dmg = dmg;
+    Armor(final int defense){
+        this.defense = defense;
     }
-     Weapon(){}
+    Armor(){}
 }
-

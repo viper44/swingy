@@ -1,8 +1,8 @@
 package model.characters.hero;
 
-import model.equipment.Armor.Armor;
-import model.equipment.Armor.ArmorFactory;
-import model.equipment.Armor.Tunic;
+import model.equipment.armor.Armor;
+import model.equipment.armor.ArmorFactory;
+import model.equipment.armor.Tunic;
 import model.equipment.Equipment;
 import model.equipment.helmet.Crown;
 import model.equipment.helmet.Helmet;
@@ -12,7 +12,6 @@ import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
 
 /**
  * Created by msemenov on 11/14/18.

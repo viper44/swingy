@@ -1,4 +1,4 @@
-package model.equipment.Armor;
+package model.equipment.armor;
 
 /**
  * Created by msemenov on 11/14/18.

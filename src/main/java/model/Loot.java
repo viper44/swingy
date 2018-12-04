@@ -1,6 +1,6 @@
 package model;
 
-import model.equipment.Armor.ArmorFactory;
+import model.equipment.armor.ArmorFactory;
 import model.equipment.Equipment;
 import model.equipment.helmet.HelmetFactory;
 import model.equipment.weapon.WeaponFactory;

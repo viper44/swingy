@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import model.characters.Characters;
-import model.equipment.Armor.*;
+import model.equipment.armor.*;
 import model.equipment.helmet.*;
 import model.equipment.weapon.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.*;
 import java.util.function.UnaryOperator;
 
 
@@ -18,19 +21,36 @@ import java.util.function.UnaryOperator;
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PROTECTED)
+@DynamicInsert
+@DynamicUpdate
+@Entity
 public abstract class Hero extends Characters implements UpdateConditions, GetLoot {
 
+    @Transient
     UnaryOperator<Integer> square = i -> i * i;
+    @Transient
     UnaryOperator<Integer> lvlCheck = i-> i * 1000 + (square.apply(i - 1)) * 450;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        int id;
         String nameH;
         int heroDamage;
         int heroDefense;
         int heroHp;
+        @OneToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "id")
         Weapon weapon;
+        @OneToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "d")
         Armor armor;
+        @OneToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "id")
         Helmet helmet;
         int level;
+        Class<? extends Hero> heroType;
         int exp;
+        @OneToOne
+        @JoinColumn(name = "id")
         Coordinates coordinates;
 
     @Override
@@ -43,7 +63,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
                 "Exp : " + this.exp + "\n" +
                 "Hero level: " + this.level + "\n" +
                 "Weapon : " + this.weapon + "\n" +
-                "Armor : " + this.armor + "\n" +
+                "armor : " + this.armor + "\n" +
                 "Helmet : " + this.helmet;
     }
     public void updateConditions(){
@@ -103,19 +123,21 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
         @Data
         @Accessors(chain = true, fluent = true)
         public static class HeroBuilder {
-            Class<? extends Hero> heroType;
+
             String heroName;
             int level;
             int exp;
             Coordinates coordinates;
+            Class<? extends Hero> heroType;
 
             public Hero build(Class <? extends Hero> heroType) {
-                this.heroType = heroType;
+
                 try {
                     return heroType.newInstance()
                             .setNameH(heroName)
                             .setLevel(level)
                             .setExp(exp)
+                            .setHeroType(heroType)
                             .setCoordinates(coordinates);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

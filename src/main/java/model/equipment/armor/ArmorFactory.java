@@ -1,4 +1,4 @@
-package model.equipment.Armor;
+package model.equipment.armor;
 
 import model.equipment.Equipment;
 
