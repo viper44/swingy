@@ -11,11 +11,13 @@ import model.equipment.weapon.Dagger;
 import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
 /**
  * Created by msemenov on 11/14/18.
  */
+@Entity
 public class TreasureHunter extends Hero{
     TreasureHunter(){
         super(WeaponFactory.newWeapon(Dagger.class),

@@ -28,13 +28,25 @@ public class Main {
 
         HeroDbManager heroDbManager = new HeroDbManager();
 
-        Hero albert = new Hero.HeroBuilder()
-                .heroName("pavlo")
+//        Hero albert = new Hero.HeroBuilder()
+//                .heroName("pavlo")
+//                .exp(0)
+//                .level(1)
+//                .coordinates(new Coordinates(5, 5))
+//                .build(HeroClass.TREASUREHUNTER);
+        Hero biba = new Hero.HeroBuilder()
+                .heroName("pepa")
                 .exp(0)
-                .level(1)
+                .level(8)
                 .coordinates(new Coordinates(5, 5))
-                .build(example.get("SpellHowler"));
-        heroDbManager.heroAdd(albert);
+                .build(HeroClass.SPELLHOWLER);
+
+//        System.out.println(biba);
+//        heroDbManager.heroAdd(biba);
+//        heroDbManager.heroAdd(albert);
+//        heroDbManager.heroAdd(ogurec);
+        heroDbManager.getHeroByid();
+        //heroDbManager.heroAdd(albert);
         //
 //  System.out.println(albert);
 //        albert.setWeapon(WeaponFactory.newWeapon(Staff.class));

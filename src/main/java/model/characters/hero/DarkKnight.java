@@ -11,11 +11,13 @@ import model.equipment.weapon.Sword;
 import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
 /**
  * Created by msemenov on 11/14/18.
  */
+@Entity
 public class DarkKnight extends Hero {
     DarkKnight(){
         super(WeaponFactory.newWeapon(Sword.class),

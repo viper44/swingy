@@ -2,18 +2,16 @@ package view.console;
 
 import controller.GameOwner;
 import lombok.Data;
-import model.characters.hero.DarkKnight;
-import model.characters.hero.Hero;
-import model.characters.hero.SpellHowler;
-import model.characters.hero.TreasureHunter;
+import model.characters.hero.*;
 
+
+import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,7 @@ public class NewGame {
     private static Map<String, Class<? extends Hero>> list = new HashMap<>();
 
 
-    private Class<? extends Hero> HeroType;
+    private HeroClass HeroType;
     @NotNull
     @NotEmpty(message = "Please enter Hero name")
     @Size(max = 10, min = 3, message = "hero name is invalid")
@@ -52,16 +50,18 @@ public class NewGame {
     }
 
     private void HeroTypeScanner() {
-        System.out.println("SpellHowler           TreasureHunter          DarkKnight");
+        System.out.println("SPELLHOWLER           TREASUREHUNTER          DARKKNIGHT");
         System.out.print("Please choose Hero class: ");
         try {
             Scanner sc2 = new Scanner(System.in);
-            if (sc2.hasNext("(SpellHowler|TreasureHunter|DarkKnight)")){
-                HeroType = list.get(sc2.nextLine());
-            } else {
+
+            while(!sc2.hasNext(Pattern.compile("\\s*(SpellHowler|TreasureHunter|DarkKnight)\\s*", Pattern.CASE_INSENSITIVE))){
                 System.out.println("You entered wrong hero type");
-                HeroTypeScanner();
+                sc2.nextLine();
+                System.out.print("Please choose Hero class: ");
+               //list.get(sc2.nextLine());
             }
+            HeroType = HeroClass.valueOf(sc2.nextLine().toUpperCase());
         } catch (Exception e){
             System.out.println(e.getMessage());
         }

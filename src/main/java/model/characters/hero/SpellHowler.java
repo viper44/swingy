@@ -11,16 +11,18 @@ import model.equipment.weapon.Staff;
 import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
 /**
  * Created by msemenov on 11/14/18.
  */
 
+@Entity
 public class SpellHowler extends Hero {
 
 
-    SpellHowler(){
+    public SpellHowler(){
         super(WeaponFactory.newWeapon(Staff.class),
                 ArmorFactory.newArmor(Tunic.class),
                 HelmetFactory.newHelmet(Crown.class));

@@ -3,14 +3,12 @@ package model.equipment.helmet;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import model.characters.hero.Hero;
 import model.equipment.Equipment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by msemenov on 11/14/18.
@@ -25,9 +23,11 @@ public class Helmet extends Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     int hp;
-
     Helmet(final int hp){
         this.hp = hp;
     }
     Helmet(){}
+    public String toString(){
+        return this.getClass().getSimpleName() + " hp: " + this.hp;
+    }
 }

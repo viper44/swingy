@@ -2,9 +2,10 @@ package view.console;
 
 import controller.GameOwner;
 import model.characters.hero.Coordinates;
-
+import java.util.regex.Pattern;
 import java.util.Scanner;
 import java.util.function.UnaryOperator;
+
 
 public class MoveView {
     static UnaryOperator<Integer> getMapSize = i-> (i - 1) * 5 + 10 - (i % 2);
@@ -51,7 +52,7 @@ public class MoveView {
         System.out.println("do you know da wae?");
         System.out.print("Please choose da wae (North, South, West, East): " );
         Scanner sc = new Scanner(System.in);
-        while(!sc.hasNext("\\s*(North|South|East|West)\\s*"))
+        while(!sc.hasNext(Pattern.compile(("\\s*(North|South|East|West)\\s*"), Pattern.CASE_INSENSITIVE)))
        {
            System.out.println("You enter wrong way");
            sc.nextLine();

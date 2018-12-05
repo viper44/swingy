@@ -15,5 +15,8 @@
         <mapping class="model.equipment.armor.Armor"/>
         <mapping class="model.equipment.helmet.Helmet"/>
         <mapping class="model.characters.hero.Coordinates"/>
+        <mapping class="model.characters.hero.SpellHowler"/>
+        <mapping class="model.characters.hero.TreasureHunter"/>
+        <mapping class="model.characters.hero.DarkKnight"/>
     </session-factory>
 </hibernate-configuration>

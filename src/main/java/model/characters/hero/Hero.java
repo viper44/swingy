@@ -12,6 +12,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.UnaryOperator;
 
 
@@ -26,6 +28,7 @@ import java.util.function.UnaryOperator;
 @Entity
 public abstract class Hero extends Characters implements UpdateConditions, GetLoot {
 
+
     @Transient
     UnaryOperator<Integer> square = i -> i * i;
     @Transient
@@ -33,37 +36,40 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         int id;
+        @Column(name = "name")
         String nameH;
+        @Column(name = "damage")
         int heroDamage;
+        @Column(name = "defense")
         int heroDefense;
+        @Column(name = "hp")
         int heroHp;
-        @OneToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "id")
+        @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
         Weapon weapon;
-        @OneToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "d")
+        @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
         Armor armor;
-        @OneToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "id")
+        @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
         Helmet helmet;
         int level;
-        Class<? extends Hero> heroType;
+        @Enumerated(EnumType.STRING)
+        @Column(length = 16)
+        HeroClass heroType;
         int exp;
-        @OneToOne
-        @JoinColumn(name = "id")
+        @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
         Coordinates coordinates;
 
     @Override
     public String toString() {
-        return "Hero name :"  + this.getName() + "\n"+
-                "Hero stats:\n" + "Damage: " + this.getDamage() + "\n"+
+        return "Hero name :"  + this.getName() + "\n" +
+                "Hero class : " + this.heroType + "\n" +
+                "Hero stats:\n" + "Damage: " + this.getDamage() + "\n" +
                 "Defense: " + this.getDefense() + "\n" +
                 "Max Health Point: " + this.getHpMax() + "\n" +
                 "Current health point: " + this.getHpCur() + "\n" +
                 "Exp : " + this.exp + "\n" +
                 "Hero level: " + this.level + "\n" +
                 "Weapon : " + this.weapon + "\n" +
-                "armor : " + this.armor + "\n" +
+                "Armor : " + this.armor + "\n" +
                 "Helmet : " + this.helmet;
     }
     public void updateConditions(){
@@ -75,6 +81,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
             setHeroHp();
         }
     }
+
 
     public Hero(Weapon weapon, Armor armor, Helmet helmet) {
             this.weapon = weapon;
@@ -89,7 +96,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
             this.setDamage(this.getHeroDamage() + this.weapon.getDmg());
         }
 
-        private void setHeroDefense(){
+        public void setHeroDefense(){
             this.setHeroDefense(2 + (2 * this.level));
             this.setDefense(heroDefense + armor.getDefense());
         }
@@ -110,6 +117,11 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
             this.setDefense(this.getHeroDefense() + this.armor.getDefense());
         }
 
+        public Hero setHeroType(HeroClass heroType){
+        this.heroType = heroType;
+        return this;
+        }
+
         public void setHelmet(Helmet helmet){
             this.helmet = helmet;
             this.setHpMax(this.heroHp + this.helmet.getHp());
@@ -128,12 +140,18 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
             int level;
             int exp;
             Coordinates coordinates;
-            Class<? extends Hero> heroType;
+            private static final Map<Enum<HeroClass>, Class<? extends Hero>> type = new HashMap<>();
 
-            public Hero build(Class <? extends Hero> heroType) {
+            static {
+                type.put(HeroClass.SPELLHOWLER, SpellHowler.class);
+                type.put(HeroClass.TREASUREHUNTER, TreasureHunter.class);
+                type.put(HeroClass.DARKKNIGHT, DarkKnight.class);
+            }
+
+            public Hero build(HeroClass heroType) {
 
                 try {
-                    return heroType.newInstance()
+                    return type.get(heroType).newInstance()
                             .setNameH(heroName)
                             .setLevel(level)
                             .setExp(exp)

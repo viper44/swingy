@@ -32,4 +32,4 @@ public abstract class ArmorFactory {
         int defense = new Random().nextInt(11 - 5) + 5;
         return (A) ARMOR_SUPPLIER.get(armors.get(index)).apply(defense);
     }
-    }
+}
