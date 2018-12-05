@@ -1,0 +1,17 @@
+/.settings/
+/target/
+/.idea/
+/build/
+/bin/
+/logs/
+/*.iml
+/.project
+/.classpath
+/src/generated/
+config/application-local.properties
+config/application-personal.properties
+/.gradle
+/bin/
+/build/
+/classes/
+/out/
