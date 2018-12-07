@@ -20,9 +20,17 @@ import java.util.ArrayList;
 @Entity
 public class DarkKnight extends Hero {
     DarkKnight(){
-        super(WeaponFactory.newWeapon(Sword.class),
-                ArmorFactory.newArmor(HeavyArmor.class),
-                HelmetFactory.newHelmet(Bucket.class));
+        super();
+    }
+
+    public Weapon getMyWeapon(){
+        return WeaponFactory.newWeapon(Sword.class);
+    }
+    public Armor getMyArmor(){
+        return ArmorFactory.newArmor(HeavyArmor.class);
+    }
+    public Helmet getMyHelmet(){
+        return HelmetFactory.newHelmet(Bucket.class);
     }
     public void getLoot(ArrayList<? extends Equipment> e){
         for (Equipment eq: e) {

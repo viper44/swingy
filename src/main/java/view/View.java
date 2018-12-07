@@ -4,29 +4,25 @@ import view.console.MeetMonsterView;
 import view.console.Menu;
 import view.console.MoveView;
 import view.console.NewGame;
+import view.gui.ShowMenuInterface;
 
 import java.util.HashMap;
 
 public abstract class View {
-    public Menu menu;
-    public MoveView moveView;
+    public MenuInterface menu;
+    public MoveViewInterface moveView;
     public MeetMonsterView monsterView;
+    public NewGameInterface newGame;
+    public LoadGameInterface loadGameInterface;
+    public ShowMenuInterface showMenuInterface;
 
-     public View(Menu menu, MoveView moveView, MeetMonsterView monsterView){
+     public View(MenuInterface menu, MoveViewInterface moveView, MeetMonsterView monsterView,
+                 NewGame newGame, LoadGameInterface loadGameInterface, ShowMenuInterface showMenuInterface){
         this.menu = menu;
         this.moveView = moveView;
         this.monsterView = monsterView;
+        this.newGame = newGame;
+        this.loadGameInterface = loadGameInterface;
+        this.showMenuInterface = showMenuInterface;
     }
-//    public void manager(){
-//         switch (menu.command){
-//             case "NewGame" : {
-//                 newGame.StartNewGame();
-//                 break;
-//             }
-//             case "Exit" : {
-//                 System.out.println("See You later!");
-//                 System.exit(1);
-//             }
-//         }
-//    }
 }

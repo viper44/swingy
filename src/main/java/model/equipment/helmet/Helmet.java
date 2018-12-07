@@ -22,12 +22,14 @@ public class Helmet extends Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    String type;
     int hp;
     Helmet(final int hp){
         this.hp = hp;
+        this.type = this.getClass().getSimpleName();
     }
     Helmet(){}
     public String toString(){
-        return this.getClass().getSimpleName() + " hp: " + this.hp;
+        return type + " hp: " + this.hp;
     }
 }

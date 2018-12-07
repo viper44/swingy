@@ -22,14 +22,16 @@ public class Armor extends Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    String type;
     private int defense;
 
 
     Armor(final int defense){
         this.defense = defense;
+        this.type = this.getClass().getSimpleName();
     }
     Armor(){}
     public String toString(){
-        return this.getClass().getSimpleName() + " defense: " + this.defense;
+        return type + " defense: " + this.defense;
     }
 }

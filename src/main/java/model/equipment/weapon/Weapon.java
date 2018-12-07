@@ -22,15 +22,17 @@ public class Weapon extends Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    String type;
     @Column(name = "damage")
     private int dmg;
 
      Weapon(int dmg){
         this.dmg = dmg;
+        this.type = this.getClass().getSimpleName();
     }
      Weapon(){}
     public String toString(){
-        return this.getClass().getSimpleName() + " damage: " + this.dmg;
+        return type + " damage: " + this.dmg;
     }
 }
 

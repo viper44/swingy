@@ -6,14 +6,14 @@ import model.Loot;
 import model.characters.hero.Coordinates;
 import model.characters.monsters.Monster;
 import model.characters.monsters.MonsterFactory;
+import storage.HeroDbManager;
 import view.View;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import model.characters.hero.Hero;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Data
@@ -23,12 +23,17 @@ public class GameOwner {
     Monster monster;
     public View view;
     static GameOwner gameOwner;
+    HeroDbManager dbManager;
+    Map<String, Runnable> actionList = new HashMap<>();
+    Map<String, Runnable> menuList = new HashMap<>();
+    Map<String, Runnable> showMenuList = new HashMap<>();
 
 
     private GameOwner(){}
 
     public void regHero(){
         this.hero = initHero();
+        this.hero.getEquip();
     }
     private void regHero(Hero hero){
         this.hero = hero;
@@ -36,6 +41,7 @@ public class GameOwner {
     public void setViewGui(View view){
         this.view = view;
     }
+    public void setDbMangaer(HeroDbManager dbMangaer){ this.dbManager = dbMangaer;}
 
     private void changeCondition(){
         this.hero.updateConditions();
@@ -49,19 +55,19 @@ public class GameOwner {
 
     private Hero initHero(){
         return new Hero.HeroBuilder()
-                .heroName(view.menu.newGame.getName())
+                .heroName(view.newGame.NameScanner())
                 .exp(0)
                 .coordinates(new Coordinates(5, 5))
                 .level(1)
-                .build(view.menu.newGame.getHeroType());
+                .build(view.newGame.HeroTypeScanner());
     }
     public void startGame(){
-        view.menu.kek.test();
+        menuList.get(view.menu.getCommand().toLowerCase()).run();
         move();
     }
-    private void move(){
-        System.out.println(hero);
-        while(true){
+    private void move() {
+
+        while (true) {
             makeMove();
             isHereMonster();
             checkCondition();
@@ -97,28 +103,63 @@ public class GameOwner {
         if (hero.getHpCur() > 0){
             hero.getLoot(Loot.getLoot());
             hero.updateConditions();
-            System.out.println(hero);
         }
     }
 
     private void makeMove() {
-        switch (view.moveView.drawMap(hero.getLevel())){
-            case "South" : {
-                hero.getCoordinates().setY(hero.getCoordinates().getY() + 1);
-                break;
-            }
-            case "North" : {
-                hero.getCoordinates().setY(hero.getCoordinates().getY() - 1);
-                break;
-            }
-            case "West" : {
-                hero.getCoordinates().setX(hero.getCoordinates().getX() - 1);
-                break;
-            }
-            case "East" : {
-                hero.getCoordinates().setX(hero.getCoordinates().getX() + 1);
-                break;
-            }
-        }
+        actionList.get(view.moveView.drawMap(hero.getLevel()).toLowerCase()).run();
     }
+
+
+    private void goSouth(){
+        hero.getCoordinates().setY(hero.getCoordinates().getY() + 1);
+    }
+    private void goNorth(){
+        hero.getCoordinates().setY(hero.getCoordinates().getY() - 1);
+    }
+    private void goWest(){
+        hero.getCoordinates().setX(hero.getCoordinates().getX() - 1);
+    }
+    private void goEast(){
+        hero.getCoordinates().setX(hero.getCoordinates().getX() + 1);
+    }
+    private void showMenu(){
+        showMenuList.get(view.showMenuInterface.showMenu().toLowerCase()).run();
+    }
+
+    private void loadGame(){
+       hero = view.loadGameInterface.loadGame(dbManager);
+    }
+
+    private void exitGame(){
+        System.out.println("You exit the Game");
+        System.exit(1);
+    }
+
+    private void resume(){
+        makeMove();
+    }
+
+
+    private void save(){
+        dbManager.heroAdd(hero);
+    }
+
+    {
+        menuList.put("newgame", this::regHero);
+        menuList.put("load", this::loadGame);
+        menuList.put("exit", this::exitGame);
+
+        actionList.put("south", this::goSouth);
+        actionList.put("north", this::goNorth);
+        actionList.put("west", this::goWest);
+        actionList.put("east", this::goEast);
+        actionList.put("menu", this::showMenu);
+
+        showMenuList.put("resume", this::resume);
+        showMenuList.put("exit", this::exitGame);
+        showMenuList.put("save", this::save);
+
+    }
+
 }

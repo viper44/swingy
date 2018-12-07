@@ -3,6 +3,7 @@ package view.console;
 import controller.GameOwner;
 import lombok.Data;
 import model.characters.hero.*;
+import view.NewGameInterface;
 
 
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 @Data
-public class NewGame {
+public class NewGame implements NewGameInterface {
     private static Map<String, Class<? extends Hero>> list = new HashMap<>();
 
 
@@ -37,34 +38,36 @@ public class NewGame {
         GameOwner.getOwner().regHero();
     }
 
-    private void NameScanner(){
+     public String NameScanner(){
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("The name must consist of letters and / or numbers (from 3 - 10 characters)");
             System.out.print("Please enter Hero name: ");
             this.Name = sc.nextLine();
         } catch (Exception e){
-
+            e.printStackTrace();
         }
         validation();
+        return this.Name;
     }
 
-    private void HeroTypeScanner() {
+    public HeroClass HeroTypeScanner() {
+        Scanner sc = null;
         System.out.println("SPELLHOWLER           TREASUREHUNTER          DARKKNIGHT");
         System.out.print("Please choose Hero class: ");
         try {
-            Scanner sc2 = new Scanner(System.in);
+            sc = new Scanner(System.in);
 
-            while(!sc2.hasNext(Pattern.compile("\\s*(SpellHowler|TreasureHunter|DarkKnight)\\s*", Pattern.CASE_INSENSITIVE))){
+            while(!sc.hasNext(Pattern.compile("\\s*(SpellHowler|TreasureHunter|DarkKnight)\\s*", Pattern.CASE_INSENSITIVE))){
                 System.out.println("You entered wrong hero type");
-                sc2.nextLine();
+                sc.nextLine();
                 System.out.print("Please choose Hero class: ");
-               //list.get(sc2.nextLine());
             }
-            HeroType = HeroClass.valueOf(sc2.nextLine().toUpperCase());
+            HeroType = HeroClass.valueOf(sc.nextLine().toUpperCase());
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return HeroType;
     }
 
 

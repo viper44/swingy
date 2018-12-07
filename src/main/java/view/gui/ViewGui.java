@@ -10,7 +10,7 @@ public class ViewGui implements ViewFunc{
 //    }
 //
 //    @Override
-//    public void NewGame() {
+//    public void NewGameInterface() {
 //
 //    }
 //

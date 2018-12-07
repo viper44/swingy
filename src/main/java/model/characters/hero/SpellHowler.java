@@ -23,10 +23,19 @@ public class SpellHowler extends Hero {
 
 
     public SpellHowler(){
-        super(WeaponFactory.newWeapon(Staff.class),
-                ArmorFactory.newArmor(Tunic.class),
-                HelmetFactory.newHelmet(Crown.class));
+
     }
+
+    public Weapon getMyWeapon(){
+        return WeaponFactory.newWeapon(Staff.class);
+    }
+    public Armor getMyArmor(){
+        return ArmorFactory.newArmor(Tunic.class);
+    }
+    public Helmet getMyHelmet(){
+        return HelmetFactory.newHelmet(Crown.class);
+    }
+
     public void getLoot(ArrayList <? extends Equipment> e){
         for (Equipment eq: e) {
             if (eq instanceof Weapon){

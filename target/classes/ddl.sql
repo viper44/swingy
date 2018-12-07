@@ -13,6 +13,11 @@ create table hero_class(
   hero_type varchar(20)
 );
 
+INSERT into hero_class (hero_type)
+values("SPELLHOWLER"),
+      ("TREASUREHUNTER"),
+      ("DARKKNIGHT");
+
 create table hero(
   id int not null  AUTO_INCREMENT primary key,
   name varchar(14),
@@ -21,7 +26,7 @@ create table hero(
   hp int not null,
   level int not null,
   exp int not null,
-  hero_class_id int not null set default 1,
+  hero_class_id int not null DEFAULT 1,
   FOREIGN KEY (hero_class_id) references hero_class(id)
 );
 

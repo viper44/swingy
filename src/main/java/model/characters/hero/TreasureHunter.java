@@ -20,9 +20,17 @@ import java.util.ArrayList;
 @Entity
 public class TreasureHunter extends Hero{
     TreasureHunter(){
-        super(WeaponFactory.newWeapon(Dagger.class),
-                ArmorFactory.newArmor(LightArmor.class),
-                HelmetFactory.newHelmet(Chub.class));
+        super();
+    }
+
+    public Weapon getMyWeapon(){
+        return WeaponFactory.newWeapon(Dagger.class);
+    }
+    public Armor getMyArmor(){
+        return ArmorFactory.newArmor(LightArmor.class);
+    }
+    public Helmet getMyHelmet(){
+        return HelmetFactory.newHelmet(Chub.class);
     }
 
     public void getLoot(ArrayList<? extends Equipment> e){

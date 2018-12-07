@@ -26,7 +26,7 @@ import java.util.function.UnaryOperator;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-public abstract class Hero extends Characters implements UpdateConditions, GetLoot {
+public abstract class Hero extends Characters implements UpdateConditions, GetLoot, GetEquip {
 
 
     @Transient
@@ -83,14 +83,16 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
     }
 
 
-    public Hero(Weapon weapon, Armor armor, Helmet helmet) {
-            this.weapon = weapon;
-            this.armor = armor;
-            this.helmet = helmet;
-            this.setHeroHp();
-            this.setHeroDamage();
-            this.setHeroDefense();
-        }
+    public Hero() { }
+
+    public void getEquip(){
+        this.weapon = this.getMyWeapon();
+        this.armor = this.getMyArmor();
+        this.helmet = this.getMyHelmet();
+        this.setHeroHp();
+        this.setHeroDamage();
+        this.setHeroDefense();
+    }
         public void setHeroDamage(){
             this.setHeroDamage(10 + (5 * this.level));
             this.setDamage(this.getHeroDamage() + this.weapon.getDmg());

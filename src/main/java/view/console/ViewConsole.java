@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class ViewConsole extends View implements ViewFunc {
 
        public ViewConsole(){
-        super(new Menu(), new MoveView(), new MeetMonsterView());
+        super(new Menu(), new MoveView(), new MeetMonsterView(), new NewGame(), new LoadGameConsole(), new ShowMenuConsole());
     }
 
 

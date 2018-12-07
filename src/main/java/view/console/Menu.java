@@ -1,39 +1,33 @@
 package view.console;
 
 
+import view.MenuInterface;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
-public class Menu {
-   public static NewGame newGame = new NewGame();
-    static Map<String, FuncInterTest> commands = new HashMap<>();
-    public FuncInterTest kek;
-    public String command;
+public class Menu implements MenuInterface {
+
     Menu() {
-        getCommand();
-        kek = commands.get(command.toLowerCase());
+
     }
-    private void getCommand() {
+      public String getCommand() {
+        Scanner sc = null;
         System.out.println("NewGame\nLoad\nExit");
         System.out.print("Please choose the command: ");
         try {
-            Scanner sc = new Scanner(System.in);
+            sc = new Scanner(System.in);
             while(!sc.hasNext(Pattern.compile("\\s*(NewGame|Load|Exit)\\s*", Pattern.CASE_INSENSITIVE))){
                 System.out.println("You entered wrong command");
                 sc.nextLine();
                 System.out.print("Please choose the command: ");
             }
-            this.command = sc.nextLine();
         } catch (Exception e){
 
         }
+          return sc.nextLine();
     }
-    static {
-        commands.put("newgame", newGame::StartNewGame);
-        commands.put("Exit", new Exit()::finishGame);
-    }
-
 }

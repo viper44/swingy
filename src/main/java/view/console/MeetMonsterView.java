@@ -19,7 +19,7 @@ public class MeetMonsterView {
         while(!sc.hasNext("\\s*(Run|Fight)\\s*"))
         {
             System.out.println("You enter wrong command");
-            sc.nextLine();
+            sc.next();
             System.out.print("Enter command Run or Fight: ");
         }
         return sc.nextLine();
