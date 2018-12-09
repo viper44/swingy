@@ -1,12 +1,9 @@
 package view.console;
 
-import controller.GameOwner;
-import model.characters.hero.Coordinates;
-import view.MoveViewInterface;
-
-import java.util.regex.Pattern;
 import java.util.Scanner;
 import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
+import view.MoveViewInterface;
 
 
 public class MoveView implements MoveViewInterface {
@@ -26,12 +23,12 @@ public class MoveView implements MoveViewInterface {
         for (int y = 1; y < size + 1; y++) {
             System.out.print("    |");
             for (int x = 1; x < size + 1; x++) {
-                if(GameOwner.getOwner().getHero().getCoordinates().getX() == x
-                        && GameOwner.getOwner().getHero().getCoordinates().getY() == y){
-                    System.out.print("H");
-                } else {
-                    System.out.print("*");
-                }
+//                if(GameOwner.getOwner().getHero().getCoordinates().getX() == x
+//                        && GameOwner.getOwner().getHero().getCoordinates().getY() == y){
+//                    System.out.print("H");
+//                } else {
+//                    System.out.print("*");
+//                }
             }
             System.out.println("|");
         }

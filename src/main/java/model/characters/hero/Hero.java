@@ -1,20 +1,19 @@
 package model.characters.hero;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.UnaryOperator;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import model.characters.Characters;
-import model.equipment.armor.*;
-import model.equipment.helmet.*;
-import model.equipment.weapon.*;
+import model.equipment.armor.Armor;
+import model.equipment.helmet.Helmet;
+import model.equipment.weapon.Weapon;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.UnaryOperator;
 
 
 /**
@@ -85,7 +84,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetLo
 
     public Hero() { }
 
-    public void getEquip(){
+    public void initEquip(){
         this.weapon = this.getMyWeapon();
         this.armor = this.getMyArmor();
         this.helmet = this.getMyHelmet();
