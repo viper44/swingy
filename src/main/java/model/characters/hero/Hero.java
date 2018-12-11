@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import model.characters.Characters;
+import model.equipment.Equipment;
 import model.equipment.armor.Armor;
 import model.equipment.helmet.Helmet;
 import model.equipment.weapon.Weapon;
@@ -25,7 +26,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-public abstract class Hero extends Characters implements UpdateConditions, GetLoot, GetEquip {
+public abstract class Hero extends Characters implements UpdateConditions, GetEquip {
 
 
     @Transient

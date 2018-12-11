@@ -44,6 +44,7 @@ public class NewGameController extends AbstractController {
                 .level(1)
                 .build(HeroClass.valueOf(heroType));
 
+        hero.initEquip();
         context.setHero(hero);
     }
 

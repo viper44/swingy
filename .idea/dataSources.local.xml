@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="swingy@localhost" uuid="d1eda33b-f1fa-4a7b-91dc-670088dd8db7">
-      <database-info product="MySQL" version="10.2.11-MariaDB" jdbc-version="4.2" driver-name="MariaDB connector/J" driver-version="2.2.1" dbms="MARIADB" exact-version="10.2.11">
+    <data-source name="@localhost" uuid="4edd7d90-5e4f-4382-9036-978a669fcc9e">
+      <database-info product="MySQL" version="5.7.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.46 ( Revision: 9cc87a48e75c2d2e87c1a293b2862ce651cb256e )" family="MYSQL" exact-version="5.7.24">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-schemas>*:@</introspection-schemas>
+      <introspection-schemas>*:@,swingy,swingy_refactor</introspection-schemas>
     </data-source>
   </component>
 </project>

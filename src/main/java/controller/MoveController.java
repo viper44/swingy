@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.UnaryOperator;
 import view.ComplexView;
+import view.MoveViewComplex;
+import view.cons.MoveConsoleView;
 
 
 public class MoveController extends AbstractController {
     Map<String, Runnable> actionList = new HashMap<>();
     UnaryOperator<Integer> getMapSize = i-> (i - 1) * 5 + 10 - (i % 2);
-    ComplexView<Integer> moveView;
+    MoveViewComplex moveView;
 
     public MoveController() {
+        moveView = new MoveConsoleView();
         actionList.put("south", this::goSouth);
         actionList.put("north", this::goNorth);
         actionList.put("west", this::goWest);
@@ -21,7 +24,7 @@ public class MoveController extends AbstractController {
     @Override
     public void process() {
         Integer size = getMapSize.apply(context.getHero().getLevel());
-        moveView.render(size);
+        moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context.getHero());
 
         String selectedWay = moveView.readUserInput();
         actionList.get(selectedWay).run();

@@ -1,17 +1,12 @@
 package game;
 
-import controller.AbstractController;
-import controller.ExitController;
-import controller.LoadGameController;
-import controller.MainMenuController;
-import controller.MoveController;
-import controller.NewGameController;
+import controller.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import model.GameContext;
 import storage.HeroDbManager;
 import view.MainMenuView;
-import view.cons.LoadGameView;
+import view.cons.*;
 import view.cons.newgame.NewHeroNameView;
 import view.cons.newgame.NewHeroTypeView;
 
@@ -23,6 +18,9 @@ abstract public class Game {
     HeroDbManager dbManager;
     MainMenuController mainMenuController;
     MoveController moveController;
+    MeetMonsterController meetMonsterController;
+    FightController fightController;
+    GetLootController getLootController;
 
     abstract protected MainMenuView mainMenuView();
 
@@ -30,20 +28,30 @@ abstract public class Game {
         NewGameController newGameController = initController(new NewGameController(new NewHeroNameView(), new NewHeroTypeView()));
         LoadGameController loadGameController = initController(new LoadGameController(new LoadGameView()));
         ExitController exitController = initController(new ExitController());
+        GetLootController getLootController = initController(new GetLootController(new GetLootConsoleView()));
+        FightController fightController =  initController(new FightController(getLootController));
 
         MainMenuController mainMenuController = initController(new MainMenuController(mainMenuView(), newGameController, loadGameController, exitController));
 
-        MoveController moveController = new MoveController();
+        MoveController moveController = initController(new MoveController());
+        MeetMonsterController meetMonsterController = initController(new MeetMonsterController(fightController, new MeetMonsterConsoleView(), new EscapeFail(), new EscapeSuccess()));
+
 
         return new ConsoleGame()
                 .setDbManager(dbManager)
                 .setMainMenuController(mainMenuController)
-                .setMoveController(moveController);
+                .setMoveController(moveController)
+                .setMeetMonsterController(meetMonsterController)
+                .setGetLootController(getLootController);
     }
 
     public void start() {
         mainMenuController.process();
-        moveController.process();
+        while (true){
+            moveController.process();
+            meetMonsterController.process();
+        }
+
 
     }
 

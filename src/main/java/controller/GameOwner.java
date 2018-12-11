@@ -33,7 +33,7 @@ public class GameOwner {
     Map<String, Runnable> showMenuList = new HashMap<>();
 
     private GameOwner(HeroDbManager dbManager) {
-        this.mainMenu = new MainMenuController(dbManager);
+//        this.mainMenu = new MainMenuController(dbManager);
     }
 
     public void setDbMangaer(HeroDbManager dbMangaer) { this.dbManager = dbMangaer;}
@@ -90,11 +90,11 @@ public class GameOwner {
 
     private void fight() {
         System.out.println(hero);
-        Fight.figthMode(hero, monster);
-        if (hero.getHpCur() > 0) {
-            hero.getLoot(Loot.getLoot());
-            hero.updateConditions();
-        }
+   //     Fight.figthMode(hero, monster);
+//        if (hero.getHpCur() > 0) {
+//            hero.getLoot(Loot.getLoot());
+//            hero.updateConditions();
+//        }
     }
 
     private void makeMove() {

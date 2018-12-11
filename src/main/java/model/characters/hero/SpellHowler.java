@@ -12,7 +12,13 @@ import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Created by msemenov on 11/14/18.
@@ -20,50 +26,50 @@ import java.util.ArrayList;
 
 @Entity
 public class SpellHowler extends Hero {
+//    @Transient
+//    final Map<Class<? extends Equipment>, Handler> equipSetter = new HashMap<>();
+//
+//    {
+//        equipSetter.put(this.weapon.getClass(), (Object o) -> setWeapon((Weapon) o));
+//        equipSetter.put(this.helmet.getClass(), (Object o) -> setHelmet((Helmet) o));
+//        equipSetter.put(this.armor.getClass(), (Object o) -> setArmor((Armor) o));
+//    }
 
 
-    public SpellHowler(){
+    public SpellHowler() {
 
     }
 
-    public Weapon getMyWeapon(){
+
+    public Weapon getMyWeapon() {
         return WeaponFactory.newWeapon(Staff.class);
     }
-    public Armor getMyArmor(){
+
+    public Armor getMyArmor() {
         return ArmorFactory.newArmor(Tunic.class);
     }
-    public Helmet getMyHelmet(){
+
+    public Helmet getMyHelmet() {
         return HelmetFactory.newHelmet(Crown.class);
     }
 
-    public void getLoot(ArrayList <? extends Equipment> e){
-        for (Equipment eq: e) {
-            if (eq instanceof Weapon){
-                if (eq.getClass().equals(Staff.class) && ((Weapon) eq).getDmg() > this.weapon.getDmg()){
-                    System.out.println("You found new Staff!\nThis Staff damage "
-                            + ((Weapon) eq).getDmg() +" and my Staff damage " + this.weapon.getDmg() +
-                            ". I'll take new one!");
-                    this.setWeapon((Weapon)eq);
-                }
-            }
-            if (eq instanceof Armor){
-                if (eq.getClass().equals(Tunic.class) && ((Armor) eq).getDefense() > this.armor.getDefense()){
-                    System.out.println("You found new Tunic!\nThis Tunic defense "
-                            + ((Armor) eq).getDefense() +" and my Tunic defense " + this.armor.getDefense() +
-                            ". I'll take new one!");
-                    this.setArmor((Armor)eq);
-                }
-            }
-            if (eq instanceof Helmet){
-                if (eq.getClass().equals(Crown.class) && ((Helmet) eq).getHp() > this.helmet.getHp()){
-                    System.out.println("You found new Crown!\nThis Crown hp "
-                            + ((Helmet) eq).getHp() +" and my Crown hp " + this.helmet.getHp() +
-                            ". I'll take new one!");
-                    this.setHelmet((Helmet)eq);
-                }
-            }
-            System.out.println(eq);
-        }
-    }
-
+//    public void getLoot(ArrayList<? extends Equipment> e) {
+//
+//        Scanner sc = new Scanner(System.in);
+//
+//
+//        for (Equipment eq : e) {
+//                if (eq.getClass().equals(this.weapon.getClass()) | eq.getClass().equals(this.armor.getClass()) | eq.getClass().equals(this.helmet.getClass())) {
+//                    System.out.println("You found new equipment" + " " + eq.toString());
+//                    System.out.println("Do You want to take it ? :");
+//                    while (!sc.hasNext("\\s*[yn]\\s*")) {
+//                        sc.nextLine();
+//                    }
+//                    if (sc.nextLine().toLowerCase().equals("y")) {
+//                        equipSetter.get(eq.getClass()).handle(eq);
+//                    }
+//                    System.out.println(eq);
+//                }
+//        }
+//    }
 }
