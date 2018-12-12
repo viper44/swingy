@@ -10,6 +10,7 @@ import storage.HeroDbManager;
 abstract public class AbstractController implements Controller {
     HeroDbManager dbManager;
     GameContext context;
+    MenuController menuController;
 
     public void setDbManager(HeroDbManager dbManager) {
         this.dbManager = dbManager;
@@ -17,5 +18,9 @@ abstract public class AbstractController implements Controller {
 
     public void setContext(GameContext context) {
         this.context = context;
+    }
+
+    public void setMenuController(MenuController menuController){
+        this.menuController = menuController;
     }
 }

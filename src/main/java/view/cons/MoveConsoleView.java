@@ -50,7 +50,7 @@ public class MoveConsoleView implements MoveViewComplex {
         {
             System.out.println("You enter wrong way");
             System.out.println("To enter main menu type menu");
-            sc.next();
+            sc.nextLine();
             System.out.print("Please choose da wae (North, South, West, East): " );
         }
         return sc.nextLine().toLowerCase();

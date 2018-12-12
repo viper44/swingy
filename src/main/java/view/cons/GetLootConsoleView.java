@@ -2,7 +2,6 @@ package view.cons;
 
 import model.equipment.Equipment;
 import view.ComplexView;
-import view.SimpleView;
 
 import java.util.Scanner;
 
