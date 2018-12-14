@@ -10,6 +10,9 @@ import view.SimpleView;
 import view.cons.*;
 import view.cons.newgame.NewHeroNameView;
 import view.cons.newgame.NewHeroTypeView;
+import view.gui.newgame.NewHeroNameGui;
+
+import java.util.concurrent.CountDownLatch;
 
 
 @Data
@@ -18,6 +21,7 @@ abstract public class Game {
     GameContext context = new GameContext();
     HeroDbManager dbManager;
 
+    CountDownLatch cdl = new CountDownLatch(1);
     MainMenuController mainMenuController;
     MoveController moveController;
     MeetMonsterController meetMonsterController;
@@ -30,7 +34,7 @@ abstract public class Game {
     public Game init(HeroDbManager dbManager) {
         this.dbManager = dbManager;
         this.menuController = initController(new MenuController(new MenuViewConsole()));
-        NewGameController newGameController = initController(new NewGameController(new NewHeroNameView(), new NewHeroTypeView()));
+        NewGameController newGameController = initController(new NewGameController(new NewHeroNameGui(), new NewHeroTypeView()));
         LoadGameController loadGameController = initController(new LoadGameController(new LoadGameView()));
         ExitController exitController = initController(new ExitController());
         GetLootController getLootController = initController(new GetLootController(new GetLootConsoleView()));
