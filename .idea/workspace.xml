@@ -311,11 +311,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="686" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="685" />
     <option name="y" value="25" />
-    <option name="width" value="1394" />
-    <option name="height" value="1337" />
+    <option name="width" value="1395" />
+    <option name="height" value="1103" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
