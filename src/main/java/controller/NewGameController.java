@@ -30,10 +30,10 @@ public class NewGameController extends AbstractController {
 
         NewHeroRequest newHeroRequest = new NewHeroRequest()
                 .setName(heroName);
-        if (!isValid(newHeroRequest)) {
+        while (!isValid(newHeroRequest)) {
             heroName = getHeroName();
+            newHeroRequest.setName(heroName);
         }
-
         typeView.render();
         String heroType = typeView.readUserInput();
 
@@ -42,7 +42,7 @@ public class NewGameController extends AbstractController {
                 .exp(0)
                 .coordinates(new Coordinates(5, 5))
                 .level(1)
-                .build(HeroClass.valueOf(heroType));
+                .build(HeroClass.valueOf(heroType.toUpperCase()));
 
         hero.initEquip();
         context.setHero(hero);

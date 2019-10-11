@@ -28,7 +28,9 @@ import javax.swing.*;
  */
 public class Main {
 
+
     public static void main(String[] args) throws InvocationTargetException, InterruptedException {
+
 
         Game game = new GuiGame().init(new HeroDbManager());
         game.start();
@@ -38,6 +40,8 @@ public class Main {
 
 
     }
+
+
     public static final HashMap<String, Class <? extends Hero>> example = new HashMap<>();
     static {
         example.put("SpellHowler", SpellHowler.class);

@@ -5,13 +5,20 @@ import java.awt.*;
 
 public class TestPanel {
     public static JFrame frame = new JFrame("Swingy");
-    public static Container container = frame.getContentPane();
+   public static JPanel panel = new JPanel();
 
     static {
+
         frame.setVisible(true);
-        frame.setBounds(500, 100, 1500, 1200);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension dimension = toolkit.getScreenSize();
+        int height = dimension.height * 6 / 10;
+        int width = dimension.width * 6 / 10;
+        frame.setBounds(dimension.width / 2 - width / 2, dimension.height /2 - height / 2, width, height);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        container.setLayout(new GridBagLayout());
+        panel.setLayout(new GridBagLayout());
+        frame.add(panel);
+
     }
 }
