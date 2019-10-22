@@ -24,7 +24,6 @@ public class NewGameController extends AbstractController {
         this.typeView = typeView;
     }
 
-    @Override
     public void process() {
         String heroName = getHeroName();
 

@@ -1,5 +1,3 @@
-package model;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -29,23 +27,16 @@ import javax.swing.*;
 public class Main {
 
 
-    public static void main(String[] args) throws InvocationTargetException, InterruptedException {
+	public static void main(String[] args) throws InvocationTargetException, InterruptedException {
+		Game game = new GuiGame().init(new HeroDbManager());
+		game.start();
+	}
 
+	private static final HashMap<String, Class<? extends Hero>> example = new HashMap<>();
 
-        Game game = new GuiGame().init(new HeroDbManager());
-        game.start();
-
-
-
-
-
-    }
-
-
-    public static final HashMap<String, Class <? extends Hero>> example = new HashMap<>();
-    static {
-        example.put("SpellHowler", SpellHowler.class);
-        example.put("TreasureHunter", TreasureHunter.class);
-        example.put("DarkKnight", DarkKnight.class);
-    }
+	static {
+		example.put("SpellHowler", SpellHowler.class);
+		example.put("TreasureHunter", TreasureHunter.class);
+		example.put("DarkKnight", DarkKnight.class);
+	}
 }

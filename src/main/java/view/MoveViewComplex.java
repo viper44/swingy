@@ -6,4 +6,6 @@ import view.View;
 
 public interface MoveViewComplex extends View {
     void drawMap(Integer size, Integer x, Integer y, Hero hero);
+
+    String readUserInput();
 }

@@ -2,10 +2,10 @@ package view.cons;
 
 import view.SimpleView;
 
-public class EscapeSuccess  implements SimpleView {
+public class EscapeFailConsole implements SimpleView {
     @Override
     public void render() {
-        System.out.println("You escape successfully ");
+        System.out.println("You fail to escape!\n Prepare to fight!");
     }
 
     @Override

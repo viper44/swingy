@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Characters {
-    int hpCur;
+    Integer hpCur;
     int hpMax;
     int damage;
     int defense;

@@ -23,7 +23,7 @@ public class Armor extends Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String type;
-    private int defense;
+    private Integer defense;
 
 
     Armor(final int defense){

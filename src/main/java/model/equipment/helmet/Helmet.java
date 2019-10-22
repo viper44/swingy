@@ -23,7 +23,7 @@ public class Helmet extends Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String type;
-    int hp;
+    Integer hp;
     Helmet(final int hp){
         this.hp = hp;
         this.type = this.getClass().getSimpleName();

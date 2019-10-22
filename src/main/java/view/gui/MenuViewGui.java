@@ -1,11 +1,7 @@
 package view.gui;
 
-
 import com.google.common.collect.Lists;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import view.MainMenuView;
+import view.SimpleView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +10,13 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class MainMenuGuiView extends MainMenuView {
+public class MenuViewGui implements SimpleView {
 	private String message;
-
-	public MainMenuGuiView() {
-	}
 
 	@Override
 	public void render() {
 		CountDownLatch c = new CountDownLatch(1);
-		new ThreadStopper(c);
+		new MenuViewGui.ThreadStopper(c);
 		try {
 			c.await();
 		} catch (InterruptedException e) {
@@ -41,18 +32,22 @@ public class MainMenuGuiView extends MainMenuView {
 		CountDownLatch cdl;
 
 		private void view() {
-			JButton buttonNewGame = new JButton("    NewGame    ");
-			JButton buttonLoad = new JButton("     Load     ");
+			TestPanel.panel.setLayout(new GridBagLayout());
+			JPanel panel = new JPanel();
+			panel.setPreferredSize(new Dimension(400, 400));
+			JButton buttonNewGame = new JButton("    Resume    ");
+			JButton buttonLoad = new JButton("     Save     ");
 			JButton buttonExit = new JButton("     Exit     ");
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
-			buttonNewGame.addActionListener(new ButtonEventListener());
-			buttonLoad.addActionListener(new ButtonEventListener());
-			buttonExit.addActionListener(new ButtonEventListener());
-			List<Component> components = Lists.newArrayList(buttonNewGame, buttonLoad, buttonExit);
+			List<JButton> components = Lists.newArrayList(buttonNewGame, buttonLoad, buttonExit);
+			components.forEach(button -> button.addActionListener(new ButtonEventListener()));
 			components.forEach(button -> button.setPreferredSize(new Dimension(300, 50)));
-			components.forEach(button -> TestPanel.panel.add(button, gbc));
+			components.forEach(button -> panel.add(button, gbc));
+			TestPanel.panel.add(panel, new GridBagConstraints());
+			TestPanel.panel.repaint();
+			TestPanel.frame.revalidate();
 		}
 
 		private ThreadStopper(CountDownLatch c) {
@@ -68,6 +63,7 @@ public class MainMenuGuiView extends MainMenuView {
 		class ButtonEventListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				message = e.getActionCommand().replaceAll("\\s+", "").toLowerCase();
 				TestPanel.panel.removeAll();
 				TestPanel.panel.revalidate();

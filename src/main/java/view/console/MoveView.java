@@ -32,17 +32,17 @@ public class MoveView implements MoveViewInterface {
             }
             System.out.println("|");
         }
-        System.out.print("     ");
-        for (int i = 0; i < size; i++) {
-            System.out.print('¯');
-        }
-        System.out.println();
-        System.out.println("          ↑");
-        System.out.println("        North");
-        System.out.print("← West     ");
-        System.out.println("   East →");
-        System.out.println("        South");
-        System.out.println("          ↓");
+//        System.out.print("     ");
+//        for (int i = 0; i < size; i++) {
+//            System.out.print('¯');
+//        }
+//        System.out.println();
+//        System.out.println("          ↑");
+//        System.out.println("        North");
+//        System.out.print("← West     ");
+//        System.out.println("   East →");
+//        System.out.println("        South");
+//        System.out.println("          ↓");
 
         return daWaeGetter();
     }

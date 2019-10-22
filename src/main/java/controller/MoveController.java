@@ -14,48 +14,49 @@ import view.cons.MoveConsoleView;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MoveController extends AbstractController {
-    Map<String, Runnable> actionList = new HashMap<>();
-    UnaryOperator<Integer> getMapSize = i-> (i - 1) * 5 + 10 - (i % 2);
-    MoveViewComplex moveView;
+	Map<String, Runnable> actionList = new HashMap<>();
+	UnaryOperator<Integer> getMapSize = i -> (i - 1) * 5 + 10 - (i % 2);
+	MoveViewComplex moveView;
 
+	public MoveController(MoveViewComplex moveView) {
+		this.moveView = moveView;
 
+		actionList.put("south", this::goSouth);
+		actionList.put("north", this::goNorth);
+		actionList.put("west", this::goWest);
+		actionList.put("east", this::goEast);
+		actionList.put("menu", this::menu);
+	}
 
-    public MoveController() {
-        moveView = new MoveConsoleView();
+	@Override
+	public void process() {
 
-        actionList.put("south", this::goSouth);
-        actionList.put("north", this::goNorth);
-        actionList.put("west", this::goWest);
-        actionList.put("east", this::goEast);
-    }
+		Integer size = getMapSize.apply(context.getHero().getLevel());
+		moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context.getHero());
 
-    @Override
-    public void process() {
+		String selectedWay = moveView.readUserInput().toLowerCase();
+		if (selectedWay.equals("menu")) {
+			menuController.process();
+			this.process();
+		}
+		actionList.get(selectedWay).run();
+	}
 
-        Integer size = getMapSize.apply(context.getHero().getLevel());
-        moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context.getHero());
+	private void goSouth() {
+		context.getHero().getCoordinates().setY(context.getHero().getCoordinates().getY() + 1);
+	}
 
-        String selectedWay = moveView.readUserInput();
-        if (selectedWay.equals("menu")){
-            menuController.process();
-            this.process();
-        }
-        actionList.get(selectedWay).run();
-    }
+	private void goNorth() {
+		context.getHero().getCoordinates().setY(context.getHero().getCoordinates().getY() - 1);
+	}
 
-    private void goSouth() {
-        context.getHero().getCoordinates().setY(context.getHero().getCoordinates().getY() + 1);
-    }
+	private void goWest() {
+		context.getHero().getCoordinates().setX(context.getHero().getCoordinates().getX() - 1);
+	}
 
-    private void goNorth() {
-        context.getHero().getCoordinates().setY(context.getHero().getCoordinates().getY() - 1);
-    }
+	private void goEast() {
+		context.getHero().getCoordinates().setX(context.getHero().getCoordinates().getX() + 1);
+	}
 
-    private void goWest() {
-        context.getHero().getCoordinates().setX(context.getHero().getCoordinates().getX() - 1);
-    }
-
-    private void goEast() {
-        context.getHero().getCoordinates().setX(context.getHero().getCoordinates().getX() + 1);
-    }
+	private void menu(){}
 }
