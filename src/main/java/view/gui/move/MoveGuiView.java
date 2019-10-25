@@ -87,7 +87,7 @@ public class MoveGuiView implements MoveViewComplex {
 			int mapHeight = dimension.height * 8 / 9;
 			BufferedImage myPicture = null;
 			try {
-				myPicture = ImageIO.read(new File("/Users/msemenov/swingy_latest/src/main/test.jpeg"));
+				myPicture = ImageIO.read(new File("D:\\Max\\Java\\java_projects\\swingy\\src\\main\\test.jpeg"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -148,7 +148,7 @@ public class MoveGuiView implements MoveViewComplex {
 			protected void paintComponent(Graphics g) {
 				BufferedImage myPicture = null;
 				try {
-					myPicture = ImageIO.read(new File("/Users/msemenov/swingy_latest/src/main/test.jpeg"));
+					myPicture = ImageIO.read(new File("D:\\Max\\Java\\java_projects\\swingy\\src\\main\\test.jpeg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -6,6 +6,8 @@ import model.characters.Characters;
 import model.characters.monsters.Monster;
 import view.ComplexView;
 import view.cons.FightConsoleView;
+import view.gui.TestPanel;
+import view.gui.move.FightGuiView;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +18,7 @@ public class FightController extends AbstractController {
 	Characters first;
 	Characters sec;
 	GetLootController getLootController;
-	ComplexView<String> fightView = new FightConsoleView();
+	ComplexView<String> fightView = new FightGuiView();
 	int checker = new Random().nextInt(10);
 
 	public FightController(GetLootController getLootController) {
@@ -38,6 +40,11 @@ public class FightController extends AbstractController {
 			fightView.render(first.getName() + " hits " + sec.getName() + " with " +
 					damage * -1 + " " + sec.getName() +
 					" current hp = " + sec.getHpCur() + "/" + sec.getHpMax());
+		}
+		if (fightView.getClass().equals(FightGuiView.class)){
+			TestPanel.panel.removeAll();
+			TestPanel.panel.revalidate();
+			TestPanel.panel.repaint();
 		}
 		if (context.getHero().getHpCur() > 0) {
 			getLootController.process();
