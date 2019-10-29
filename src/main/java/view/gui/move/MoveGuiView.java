@@ -2,6 +2,7 @@ package view.gui.move;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import model.GameContext;
 import model.characters.hero.Hero;
 import view.MoveViewComplex;
 import view.gui.TestPanel;
@@ -17,16 +18,17 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 
 public class MoveGuiView implements MoveViewComplex {
 	private String message;
 
 	@Override
-	public void drawMap(Integer size, Integer x, Integer y, Hero hero) {
+	public void drawMap(Integer size, Integer x, Integer y,GameContext gameContext) {
 		CountDownLatch c;
 		c = new CountDownLatch(1);
-		new MoveGuiView.ThreadStopper(c, size, x, y, hero);
+		new MoveGuiView.ThreadStopper(c, size, x, y, gameContext.getHero(), gameContext.getIcon());
 		try {
 			c.await();
 		} catch (InterruptedException e) {
@@ -46,14 +48,15 @@ public class MoveGuiView implements MoveViewComplex {
 		Integer heroXPos;
 		Integer heroYPos;
 		Hero hero;
+		ImageIcon imageIcon;
 
-
-		private ThreadStopper(CountDownLatch cdl2, Integer size, Integer x, Integer y, Hero hero) {
+		private ThreadStopper(CountDownLatch cdl2, Integer size, Integer x, Integer y, Hero hero, ImageIcon imageIcon) {
 			this.c2 = cdl2;
 			this.size = size;
 			this.heroXPos = x;
 			this.heroYPos = y;
 			this.hero = hero;
+			this.imageIcon = imageIcon;
 			this.run();
 		}
 
@@ -85,13 +88,8 @@ public class MoveGuiView implements MoveViewComplex {
 			Dimension dimension = TestPanel.panel.getSize();
 			int mapWidth = dimension.width * 7 / 10;
 			int mapHeight = dimension.height * 8 / 9;
-			BufferedImage myPicture = null;
-			try {
-				myPicture = ImageIO.read(new File("D:\\Max\\Java\\java_projects\\swingy\\src\\main\\test.jpeg"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+
+			JLabel picLabel = new JLabel(imageIcon);
 			int heroWidth = dimension.width / 4;
 			int heroHeight = dimension.height * 8 / 10;
 			JPanel heroPanel = new JPanel();
@@ -148,7 +146,7 @@ public class MoveGuiView implements MoveViewComplex {
 			protected void paintComponent(Graphics g) {
 				BufferedImage myPicture = null;
 				try {
-					myPicture = ImageIO.read(new File("D:\\Max\\Java\\java_projects\\swingy\\src\\main\\test.jpeg"));
+					myPicture = ImageIO.read(getClass().getClassLoader().getResourceAsStream(hero.getPicPath()));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -212,13 +210,13 @@ public class MoveGuiView implements MoveViewComplex {
 			JLabel[] fields = new JLabel[fieldStrings.length];
 			for (int ii = 0; ii < labels.length; ii++) {
 				labels[ii] = new JLabel(labelStrings[ii]);
-				Border margin = new EmptyBorder(10,10,10,10);
+				Border margin = new EmptyBorder(10, 10, 10, 10);
 				labels[ii].setBorder(new CompoundBorder(blackLine, margin));
 
 			}
 			for (int ii = 0; ii < fieldStrings.length; ii++) {
 				fields[ii] = new JLabel(fieldStrings[ii]);
-				Border margin = new EmptyBorder(10,10,10,10);
+				Border margin = new EmptyBorder(10, 10, 10, 10);
 				fields[ii].setBorder(new CompoundBorder(blackLine, margin));
 			}
 			return getTwoColumnLayout(fields, labels);

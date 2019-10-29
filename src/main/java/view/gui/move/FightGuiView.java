@@ -5,9 +5,8 @@ import view.gui.TestPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class FightGuiView implements ComplexView<String> {
 	@Override
@@ -38,7 +37,7 @@ public class FightGuiView implements ComplexView<String> {
 			this.run();
 		}
 
-		private void view() throws InterruptedException {
+		private void view() {
 			TestPanel.panel.setLayout(new FlowLayout());
 			JPanel panel = new JPanel();
 			panel.setPreferredSize(new Dimension(800, 20));
@@ -46,19 +45,19 @@ public class FightGuiView implements ComplexView<String> {
 			panel.add(meetMonster);
 			TestPanel.panel.add(panel, new GridBagConstraints());
 			TestPanel.panel.repaint();
-			Thread.sleep(1000);
 			TestPanel.frame.revalidate();
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			c2.countDown();
 		}
 
 
 		@Override
 		public void run() {
-			try {
-				view();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			view();
 		}
 	}
 }

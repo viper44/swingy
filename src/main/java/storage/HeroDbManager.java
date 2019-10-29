@@ -1,5 +1,7 @@
 package storage;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import model.characters.hero.Hero;
 import model.equipment.weapon.Weapon;
 import org.hibernate.Session;
@@ -13,6 +15,7 @@ import java.util.List;
 /**
  * Created by msemenov on 12/4/18.
  */
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class HeroDbManager {
     SessionFactory sessionFactory;
     public HeroDbManager(){
@@ -44,4 +47,11 @@ public class HeroDbManager {
         session.close();
         return heroes;
     }
+
+//    public boolean checkHeroByName(){
+//        Session session = sessionFactory.openSession();
+//        C
+//        return
+//    }
+
 }

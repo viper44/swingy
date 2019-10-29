@@ -1,5 +1,6 @@
 package view.cons;
 
+import model.GameContext;
 import model.characters.hero.Hero;
 import view.ComplexView;
 import view.MoveViewComplex;
@@ -9,8 +10,8 @@ import java.util.regex.Pattern;
 
 public class MoveConsoleView implements MoveViewComplex {
 	@Override
-	public void drawMap(Integer size, Integer HeroPosX, Integer HeroPosY, Hero hero) {
-		System.out.println(hero);
+	public void drawMap(Integer size, Integer HeroPosX, Integer HeroPosY, GameContext gameContext) {
+		System.out.println(gameContext.getHero());
 		System.out.print("     ");
 		for (int i = 0; i < size; i++) {
 			System.out.print('_');

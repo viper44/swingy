@@ -11,6 +11,7 @@ import model.equipment.helmet.HelmetFactory;
 import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 import view.ComplexView;
+import view.LootComplexView;
 
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -32,9 +33,9 @@ public class GetLootController extends AbstractController {
 	@Transient
 	final Map<Class<? extends Equipment>, Handler> equipSetter = new HashMap<>();
 	ArrayList<Equipment> equipment;
-	ComplexView<Equipment> lootView;
+	LootComplexView<Equipment> lootView;
 
-	public GetLootController(ComplexView lootView) {
+	public GetLootController(LootComplexView lootView) {
 		this.lootView = lootView;
 	}
 
@@ -58,8 +59,8 @@ public class GetLootController extends AbstractController {
 				if (eq.getClass().equals(context.getHero().getWeapon().getClass()) |
 						eq.getClass().equals(context.getHero().getArmor().getClass()) |
 						eq.getClass().equals(context.getHero().getHelmet().getClass())) {
-					lootView.render(eq);
-					if (lootView.readUserInput().toLowerCase().equals("y")) {
+					lootView.render(eq, context);
+					if (lootView.readUserInput().toLowerCase().equals("y") || lootView.readUserInput().toLowerCase().equals("yes")) {
 						equipSetter.get(eq.getClass()).handle(eq);
 					}
 				}

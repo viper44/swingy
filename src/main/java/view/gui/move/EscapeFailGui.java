@@ -41,7 +41,7 @@ public class EscapeFailGui implements SimpleView {
 			startCrying.addActionListener(new ButtonEventListener());
 			JPanel panel = new JPanel();
 			panel.setPreferredSize(new Dimension(600, 600));
-			JLabel meetMonster = new JLabel("You meet monster!");
+			JLabel meetMonster = new JLabel("You fail to escape!");
 			panel.add(meetMonster);
 			panel.add(startCrying);
 			TestPanel.panel.add(panel, new GridBagConstraints());

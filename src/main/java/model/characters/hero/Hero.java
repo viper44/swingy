@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import model.characters.Characters;
-import model.equipment.Equipment;
 import model.equipment.armor.Armor;
 import model.equipment.helmet.Helmet;
 import model.equipment.weapon.Weapon;
@@ -27,7 +26,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-public abstract class Hero extends Characters implements UpdateConditions, GetEquip {
+public abstract class Hero extends Characters implements UpdateConditions, GetEquip, GetPic {
 
 
 	@Transient
@@ -45,6 +44,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetEq
 	Integer heroDefense;
 	@Column(name = "hp")
 	Integer heroHp;
+	String picPath;
 	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	Weapon weapon;
 	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -95,6 +95,7 @@ public abstract class Hero extends Characters implements UpdateConditions, GetEq
 		this.setHeroHp();
 		this.setHeroDamage();
 		this.setHeroDefense();
+		this.picPath = this.initPic();
 	}
 
 	public void setHeroDamage() {

@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import model.characters.hero.Hero;
@@ -20,8 +22,8 @@ public class LoadGameController extends AbstractController {
 
         loadGameView.render(heroList);
         String selectedHero = loadGameView.readUserInput();
-        Hero hero = heroList.get(Integer.valueOf(selectedHero) - 1);
-
+        Hero hero = heroList.stream().filter(h -> h.getId() != Integer.valueOf(selectedHero)).collect(Collectors.toList()).get(0);
+        hero.setPicPath(hero.initPic());
         context.setHero(hero);
     }
 }

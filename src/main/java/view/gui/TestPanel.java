@@ -8,7 +8,6 @@ public class TestPanel {
 	public static JPanel panel = new JPanel();
 
 	static {
-
 		frame.setVisible(true);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
@@ -19,6 +18,5 @@ public class TestPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setLayout(new GridBagLayout());
 		frame.add(panel);
-
 	}
 }

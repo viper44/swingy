@@ -11,7 +11,7 @@ import model.equipment.weapon.Weapon;
 import model.equipment.weapon.WeaponFactory;
 
 public interface GetEquip {
-    public Weapon getMyWeapon();
-    public Armor getMyArmor();
-    public Helmet getMyHelmet();
+    Weapon getMyWeapon();
+    Armor getMyArmor();
+    Helmet getMyHelmet();
 }

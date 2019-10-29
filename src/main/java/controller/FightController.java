@@ -5,6 +5,7 @@ import model.Loot;
 import model.characters.Characters;
 import model.characters.monsters.Monster;
 import view.ComplexView;
+import view.SimpleView;
 import view.cons.FightConsoleView;
 import view.gui.TestPanel;
 import view.gui.move.FightGuiView;
@@ -19,9 +20,11 @@ public class FightController extends AbstractController {
 	Characters sec;
 	GetLootController getLootController;
 	ComplexView<String> fightView = new FightGuiView();
+	SimpleView dieView;
 	int checker = new Random().nextInt(10);
 
-	public FightController(GetLootController getLootController) {
+	public FightController(GetLootController getLootController, SimpleView diedView) {
+		this.dieView = diedView;
 		this.getLootController = getLootController;
 	}
 
@@ -30,7 +33,7 @@ public class FightController extends AbstractController {
 		swap(context.getHero(), monster);
 		while (first.getHpCur() > 0 && sec.getHpCur() > 0) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(800);
 			} catch (InterruptedException e) {
 
 			}
@@ -50,7 +53,7 @@ public class FightController extends AbstractController {
 			getLootController.process();
 			context.getHero().updateConditions();
 		} else {
-			System.out.println("you died");
+			dieView.render();
 			try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e) {

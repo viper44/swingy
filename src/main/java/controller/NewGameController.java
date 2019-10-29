@@ -1,5 +1,7 @@
 package controller;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -11,6 +13,11 @@ import model.characters.hero.Hero.HeroBuilder;
 import model.characters.hero.HeroClass;
 import model.dto.NewHeroRequest;
 import view.SimpleView;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

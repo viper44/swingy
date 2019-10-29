@@ -2,6 +2,7 @@ package controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
 import lombok.AccessLevel;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import view.ComplexView;
 import view.MoveViewComplex;
+import view.SimpleView;
 import view.cons.MoveConsoleView;
 
 @Data
@@ -17,9 +19,11 @@ public class MoveController extends AbstractController {
 	Map<String, Runnable> actionList = new HashMap<>();
 	UnaryOperator<Integer> getMapSize = i -> (i - 1) * 5 + 10 - (i % 2);
 	MoveViewComplex moveView;
+	SimpleView view;
 
-	public MoveController(MoveViewComplex moveView) {
+	public MoveController(MoveViewComplex moveView, SimpleView view) {
 		this.moveView = moveView;
+		this.view = view;
 
 		actionList.put("south", this::goSouth);
 		actionList.put("north", this::goNorth);
@@ -32,7 +36,7 @@ public class MoveController extends AbstractController {
 	public void process() {
 
 		Integer size = getMapSize.apply(context.getHero().getLevel());
-		moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context.getHero());
+		moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
 
 		String selectedWay = moveView.readUserInput().toLowerCase();
 		if (selectedWay.equals("menu")) {
@@ -40,6 +44,16 @@ public class MoveController extends AbstractController {
 			this.process();
 		}
 		actionList.get(selectedWay).run();
+		if(context.getHero().getCoordinates().getX() == size + 1 || context.getHero().getCoordinates().getX() == 0 ||
+				context.getHero().getCoordinates().getY() == 0 || context.getHero().getCoordinates().getY() == size + 1){
+			view.render();
+			try {
+				TimeUnit.SECONDS.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.exit(777);
+		}
 	}
 
 	private void goSouth() {

@@ -8,10 +8,9 @@ import storage.HeroDbManager;
 import view.MainMenuView;
 import view.cons.*;
 import view.gui.MenuViewGui;
-import view.gui.move.EscapeFailGui;
-import view.gui.move.EscapeSuccessGui;
-import view.gui.move.MeetMonsterGuiView;
-import view.gui.move.MoveGuiView;
+import view.gui.endgame.DiedGuiView;
+import view.gui.endgame.WinGameGuiView;
+import view.gui.move.*;
 import view.gui.newgame.NewHeroClassGui;
 import view.gui.newgame.NewHeroNameGui;
 
@@ -38,11 +37,11 @@ abstract public class Game {
 		NewGameController newGameController = initController(new NewGameController(new NewHeroNameGui(), new NewHeroClassGui()));
 		LoadGameController loadGameController = initController(new LoadGameController(new LoadGameView()));
 		ExitController exitController = initController(new ExitController());
-		GetLootController getLootController = initController(new GetLootController(new GetLootConsoleView()));
-		FightController fightController = initController(new FightController(getLootController));
+		GetLootController getLootController = initController(new GetLootController(new LootGuiView()));
+		FightController fightController = initController(new FightController(getLootController, new DiedGuiView()));
 		MainMenuController mainMenuController = initController(new MainMenuController(mainMenuView(), newGameController, loadGameController, exitController));
 
-		MoveController moveController = initController(new MoveController(new MoveGuiView()));
+		MoveController moveController = initController(new MoveController(new MoveGuiView(), new WinGameGuiView()));
 		MeetMonsterController meetMonsterController = initController(new MeetMonsterController(fightController, new MeetMonsterGuiView(), new EscapeFailGui(), new EscapeSuccessGui()));
 
 		return new ConsoleGame()
