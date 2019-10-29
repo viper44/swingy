@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import model.GameContext;
 import view.ComplexView;
 import view.MoveViewComplex;
 import view.SimpleView;
@@ -37,7 +38,8 @@ public class MoveController extends AbstractController {
 
 		Integer size = getMapSize.apply(context.getHero().getLevel());
 		moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
-
+		context.setPreviousX(context.getHero().getCoordinates().getX());
+		context.setPreviousY(context.getHero().getCoordinates().getY());
 		String selectedWay = moveView.readUserInput().toLowerCase();
 		if (selectedWay.equals("menu")) {
 			menuController.process();

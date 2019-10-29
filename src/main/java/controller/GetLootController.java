@@ -60,7 +60,8 @@ public class GetLootController extends AbstractController {
 						eq.getClass().equals(context.getHero().getArmor().getClass()) |
 						eq.getClass().equals(context.getHero().getHelmet().getClass())) {
 					lootView.render(eq, context);
-					if (lootView.readUserInput().toLowerCase().equals("y") || lootView.readUserInput().toLowerCase().equals("yes")) {
+					String answer = lootView.readUserInput().toLowerCase();
+					if (answer.equals("y") || answer.equals("yes")) {
 						equipSetter.get(eq.getClass()).handle(eq);
 					}
 				}

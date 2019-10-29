@@ -53,6 +53,8 @@ public class MainMenuGuiView extends MainMenuView {
 			List<Component> components = Lists.newArrayList(buttonNewGame, buttonLoad, buttonExit);
 			components.forEach(button -> button.setPreferredSize(new Dimension(300, 50)));
 			components.forEach(button -> TestPanel.panel.add(button, gbc));
+			TestPanel.panel.repaint();
+			TestPanel.frame.revalidate();
 		}
 
 		private ThreadStopper(CountDownLatch c) {

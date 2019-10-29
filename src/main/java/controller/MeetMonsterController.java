@@ -3,6 +3,7 @@ package controller;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import model.characters.hero.Coordinates;
 import model.characters.monsters.Monster;
 import model.characters.monsters.MonsterFactory;
 import view.ComplexView;
@@ -38,6 +39,7 @@ public class MeetMonsterController extends AbstractController {
 			} else if (command.equals("run")) {
 				if (new Random().nextBoolean()) {
 					escapeS.render();
+					context.setHero(context.getHero().setCoordinates(new Coordinates(context.getPreviousX(), context.getPreviousY())));
 				} else {
 					escapeF.render();
 					fightController.process();

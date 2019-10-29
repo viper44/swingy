@@ -19,12 +19,13 @@ public class FightController extends AbstractController {
 	Characters first;
 	Characters sec;
 	GetLootController getLootController;
-	ComplexView<String> fightView = new FightGuiView();
+	ComplexView<String> fightView;
 	SimpleView dieView;
 	int checker = new Random().nextInt(10);
 
-	public FightController(GetLootController getLootController, SimpleView diedView) {
+	public FightController(GetLootController getLootController, ComplexView fightView, SimpleView diedView) {
 		this.dieView = diedView;
+		this.fightView = fightView;
 		this.getLootController = getLootController;
 	}
 
@@ -33,7 +34,7 @@ public class FightController extends AbstractController {
 		swap(context.getHero(), monster);
 		while (first.getHpCur() > 0 && sec.getHpCur() > 0) {
 			try {
-				Thread.sleep(800);
+				Thread.sleep(300);
 			} catch (InterruptedException e) {
 
 			}

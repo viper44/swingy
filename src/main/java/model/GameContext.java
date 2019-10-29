@@ -1,7 +1,8 @@
 package model;
 
-import lombok.Data;
+import game.Game;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import model.characters.hero.Hero;
 
@@ -16,6 +17,12 @@ import java.io.IOException;
 public class GameContext {
     Hero hero;
     ImageIcon icon;
+    @Setter@Getter
+    Integer previousX;
+    @Setter@Getter
+    Integer previousY;
+    @Setter@Getter
+    Game game;
 
     public void setHero(Hero hero){
         this.hero = hero;

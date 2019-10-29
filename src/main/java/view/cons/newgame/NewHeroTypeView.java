@@ -18,7 +18,7 @@ public class NewHeroTypeView implements SimpleView {
 
     @Override
     public void render() {
-        System.out.println("SPELLHOWLER           TREASUREHUNTER          DARKKNIGHT");
+        System.out.println("SPELLHOWLER(sh)           TREASUREHUNTER(th)          DARKKNIGHT(dk)");
         System.out.print("Please choose Hero class: ");
     }
 

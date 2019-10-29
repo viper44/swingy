@@ -13,6 +13,6 @@ public class NewHeroRequest {
 
     @NotNull
     @NotEmpty(message = "Please enter Hero name")
-    @Size(max = 10, min = 3, message = "hero name is invalid")
+    @Size(max = 8, min = 3, message = "hero name is invalid")
     private String name;
 }

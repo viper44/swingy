@@ -65,8 +65,8 @@ public abstract class Hero extends Characters implements UpdateConditions, GetEq
 				"Hero class : " + this.heroType + "\n" +
 				"Hero stats:\n" + "Damage: " + this.getDamage() + "\n" +
 				"Defense: " + this.getDefense() + "\n" +
-				"Max Health Point: " + this.getHpMax() + "\n" +
-				"Current health point: " + this.getHpCur() + "\n" +
+				"Max HP: " + this.getHpMax() + "\n" +
+				"Current HP: " + this.getHpCur() + "\n" +
 				"Exp : " + this.exp + "\n" +
 				"Hero level: " + this.level + "\n" +
 				"Weapon : " + this.weapon + "\n" +

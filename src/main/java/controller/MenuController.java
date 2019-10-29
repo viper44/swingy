@@ -1,5 +1,6 @@
 package controller;
 
+import game.ConsoleGame;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -19,25 +20,33 @@ public class MenuController extends AbstractController {
 		commandMap.put("save", this::saveGame);
 		commandMap.put("resume", this::resume);
 		commandMap.put("exit", this::exit);
+		commandMap.put("change", this::changeView);
 	}
 
 
 	@Override
 	public void process() {
 		menuView.render();
-		String command = menuView.readUserInput();
+		String command = menuView.readUserInput().toLowerCase();
 		commandMap.get(command).run();
 	}
 
 	private void saveGame() {
 		dbManager.heroAdd(context.getHero());
+
 	}
 
 	private void resume() {
+
 		return;
 	}
 
 	private void exit() {
+
 		System.exit(1);
+	}
+
+	private void changeView(){
+		context.setGame(new ConsoleGame());
 	}
 }

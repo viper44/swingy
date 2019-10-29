@@ -1,7 +1,5 @@
 package controller;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -14,14 +12,9 @@ import model.characters.hero.HeroClass;
 import model.dto.NewHeroRequest;
 import view.SimpleView;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class NewGameController extends AbstractController {
+public class NewGameController extends AbstractController implements Supporter {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     SimpleView nameView;
     SimpleView typeView;
@@ -32,6 +25,21 @@ public class NewGameController extends AbstractController {
     }
 
     public void process() {
+
+    }
+
+    private String getHeroName() {
+        nameView.render();
+        return nameView.readUserInput();
+    }
+
+    private boolean isValid(NewHeroRequest newHeroRequest) {
+        Validator validator = factory.getValidator();
+        return validator.validate(newHeroRequest).isEmpty();
+    }
+
+    @Override
+    public int supProcess() {
         String heroName = getHeroName();
 
         NewHeroRequest newHeroRequest = new NewHeroRequest()
@@ -52,15 +60,6 @@ public class NewGameController extends AbstractController {
 
         hero.initEquip();
         context.setHero(hero);
-    }
-
-    private String getHeroName() {
-        nameView.render();
-        return nameView.readUserInput();
-    }
-
-    private boolean isValid(NewHeroRequest newHeroRequest) {
-        Validator validator = factory.getValidator();
-        return validator.validate(newHeroRequest).isEmpty();
+        return 1;
     }
 }

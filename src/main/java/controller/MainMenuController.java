@@ -11,9 +11,10 @@ import view.gui.MainMenuGuiView;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MainMenuController extends AbstractController {
-    Map<String, Controller> menuList = new HashMap<>();
-    public MainMenuView menuView;
+public class MainMenuController extends AbstractController implements Supporter
+{
+    Map<String, Supporter> menuList = new HashMap<>();
+    private MainMenuView menuView;
 
     public MainMenuController(MainMenuView menuView, NewGameController newGameController,
             LoadGameController loadGameController, ExitController controller) {
@@ -27,11 +28,14 @@ public class MainMenuController extends AbstractController {
     @Override
     public void process() {
 
+    }
 
+    @Override
+    public int supProcess() {
         menuView.render();
 
         String userInput = menuView.readUserInput();
 
-        menuList.get(userInput).process();
+       return menuList.get(userInput).supProcess();
     }
 }

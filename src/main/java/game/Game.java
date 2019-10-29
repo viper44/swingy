@@ -6,16 +6,6 @@ import lombok.experimental.Accessors;
 import model.GameContext;
 import storage.HeroDbManager;
 import view.MainMenuView;
-import view.cons.*;
-import view.gui.MenuViewGui;
-import view.gui.endgame.DiedGuiView;
-import view.gui.endgame.WinGameGuiView;
-import view.gui.move.*;
-import view.gui.newgame.NewHeroClassGui;
-import view.gui.newgame.NewHeroNameGui;
-
-import java.util.concurrent.CountDownLatch;
-
 
 @Data
 @Accessors(chain = true)
@@ -31,37 +21,22 @@ abstract public class Game {
 
 	abstract protected MainMenuView mainMenuView();
 
-	public Game init(HeroDbManager dbManager) {
-		this.dbManager = dbManager;
-		this.menuController = initController(new MenuController(new MenuViewGui()));
-		NewGameController newGameController = initController(new NewGameController(new NewHeroNameGui(), new NewHeroClassGui()));
-		LoadGameController loadGameController = initController(new LoadGameController(new LoadGameView()));
-		ExitController exitController = initController(new ExitController());
-		GetLootController getLootController = initController(new GetLootController(new LootGuiView()));
-		FightController fightController = initController(new FightController(getLootController, new DiedGuiView()));
-		MainMenuController mainMenuController = initController(new MainMenuController(mainMenuView(), newGameController, loadGameController, exitController));
+	abstract public Game init(HeroDbManager dbManager);
 
-		MoveController moveController = initController(new MoveController(new MoveGuiView(), new WinGameGuiView()));
-		MeetMonsterController meetMonsterController = initController(new MeetMonsterController(fightController, new MeetMonsterGuiView(), new EscapeFailGui(), new EscapeSuccessGui()));
-
-		return new ConsoleGame()
-				.setDbManager(dbManager)
-				.setMainMenuController(mainMenuController)
-				.setMoveController(moveController)
-				.setMeetMonsterController(meetMonsterController)
-				.setGetLootController(getLootController)
-				.setMenuController(menuController);
-	}
 
 	public void start() {
-		mainMenuController.process();
+		context.setGame(this);
+		int ret = 0;
+		while (ret == 0){
+			ret = mainMenuController.supProcess();
+		}
 		while (true) {
 			moveController.process();
 			meetMonsterController.process();
 		}
 	}
 
-	private <C extends AbstractController> C initController(C controller) {
+	public <C extends AbstractController> C initController(C controller) {
 		controller.setContext(context);
 		controller.setDbManager(dbManager);
 		controller.setMenuController(menuController);

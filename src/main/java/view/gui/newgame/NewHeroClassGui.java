@@ -1,5 +1,6 @@
 package view.gui.newgame;
 
+import com.google.common.collect.Lists;
 import view.SimpleView;
 import view.gui.TestPanel;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class NewHeroClassGui implements SimpleView {
@@ -26,16 +28,11 @@ public class NewHeroClassGui implements SimpleView {
 
 	@Override
 	public String readUserInput() {
-
 		return message;
 	}
 
 	class ThreadStopper implements Runnable {
 		private CountDownLatch c2;
-		private JTextField textField = new JTextField("hero name", 20);
-		private JButton button = new JButton("SpellHowler");
-		private JButton button2 = new JButton("TreasureHunter");
-		private JButton button3 = new JButton("DarkKnight");
 
 		private ThreadStopper(CountDownLatch cdl2) {
 			this.c2 = cdl2;
@@ -43,36 +40,20 @@ public class NewHeroClassGui implements SimpleView {
 		}
 
 		private void view() {
-
-			TestPanel.panel.setLayout(new FlowLayout());
-			JPanel spell = new JPanel();
-			JPanel tres = new JPanel();
-			JPanel dark = new JPanel();
-			Dimension dimension = TestPanel.panel.getSize();
-			int width = dimension.width / 3 * 5 / 10;
-			int height = dimension.height * 7 / 10;
-			spell.setPreferredSize(new Dimension(width, height));
-			spell.setBackground(Color.BLUE);
-			tres.setPreferredSize(new Dimension(width, height));
-			tres.setBackground(Color.YELLOW);
-			dark.setPreferredSize(new Dimension(width, height));
-			dark.setBackground(Color.GREEN);
-			TestPanel.panel.add(spell);
-			TestPanel.panel.add(tres);
-			TestPanel.panel.add(dark);
-
-			button.addActionListener(new ButtonEventListener());
-			button2.addActionListener(new ButtonEventListener());
-			button3.addActionListener(new ButtonEventListener());
-			button.setPreferredSize(new Dimension(100, 100));
-
-			spell.add(button);
-			tres.add(button2);
-			dark.add(button3);
+			JButton spellhowler = new JButton("SpellHowler");
+			JButton treasure = new JButton("TreasureHunter");
+			JButton knight = new JButton("DarkKnight");
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			spellhowler.addActionListener(new NewHeroClassGui.ThreadStopper.ButtonEventListener());
+			treasure.addActionListener(new NewHeroClassGui.ThreadStopper.ButtonEventListener());
+			knight.addActionListener(new NewHeroClassGui.ThreadStopper.ButtonEventListener());
+			List<Component> components = Lists.newArrayList(spellhowler, treasure, knight);
+			components.forEach(button -> button.setPreferredSize(new Dimension(300, 50)));
+			components.forEach(button -> TestPanel.panel.add(button, gbc));
 			TestPanel.panel.repaint();
 			TestPanel.frame.revalidate();
-
-
 		}
 
 		class ButtonEventListener implements ActionListener {

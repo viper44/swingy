@@ -38,10 +38,11 @@ public class MenuViewGui implements SimpleView {
 			JButton buttonNewGame = new JButton("    Resume    ");
 			JButton buttonLoad = new JButton("     Save     ");
 			JButton buttonExit = new JButton("     Exit     ");
+			JButton buttonChange = new JButton("   Change   ");
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
-			List<JButton> components = Lists.newArrayList(buttonNewGame, buttonLoad, buttonExit);
+			List<JButton> components = Lists.newArrayList(buttonNewGame, buttonLoad, buttonExit, buttonChange);
 			components.forEach(button -> button.addActionListener(new ButtonEventListener()));
 			components.forEach(button -> button.setPreferredSize(new Dimension(300, 50)));
 			components.forEach(button -> panel.add(button, gbc));
