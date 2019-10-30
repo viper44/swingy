@@ -78,6 +78,7 @@ public class MoveGuiView implements MoveViewComplex {
 		}
 
 		private void view() {
+			TestPanel.panel.removeAll();
 			JButton north = new JButton("North");
 			JButton south = new JButton("South");
 			JButton west = new JButton("West");
@@ -110,7 +111,6 @@ public class MoveGuiView implements MoveViewComplex {
 			way.add(north);
 			way.add(south);
 			way.add(west);
-			way.add(east);
 			way.add(east);
 			way.add(menu);
 

@@ -37,16 +37,20 @@ public class MoveController extends AbstractController {
 
 	@Override
 	public void process() {
-
 		Integer size = getMapSize.apply(context.getHero().getLevel());
-		moveManager.get(context.getSequence()).drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
-		context.setPreviousX(context.getHero().getCoordinates().getX());
-		context.setPreviousY(context.getHero().getCoordinates().getY());
-		String selectedWay = moveManager.get(context.getSequence()).readUserInput().toLowerCase();
-		if (selectedWay.equals("menu")) {
-			menuController.process();
-			this.process();
+		String selectedWay = "menu";
+		while(selectedWay.equals("menu")){
+
+			moveManager.get(context.getSequence()).drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
+			context.setPreviousX(context.getHero().getCoordinates().getX());
+			context.setPreviousY(context.getHero().getCoordinates().getY());
+			selectedWay = moveManager.get(context.getSequence()).readUserInput().toLowerCase();
+			if (selectedWay.equals("menu")) {
+				menuController.process();
+			}
 		}
+
+
 		actionList.get(selectedWay).run();
 		if(context.getHero().getCoordinates().getX() == size + 1 || context.getHero().getCoordinates().getX() == 0 ||
 				context.getHero().getCoordinates().getY() == 0 || context.getHero().getCoordinates().getY() == size + 1){

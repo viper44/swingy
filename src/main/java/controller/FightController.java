@@ -10,6 +10,8 @@ import view.cons.FightConsoleView;
 import view.gui.TestPanel;
 import view.gui.move.FightGuiView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -19,13 +21,15 @@ public class FightController extends AbstractController {
 	Characters first;
 	Characters sec;
 	GetLootController getLootController;
-	ComplexView<String> fightView;
-	SimpleView dieView;
+	Map<Integer, ComplexView<String>> fightViewManager = new HashMap();
+	Map<Integer, SimpleView> dieViewManager = new HashMap<>();
 	int checker = new Random().nextInt(10);
 
-	public FightController(GetLootController getLootController, ComplexView fightView, SimpleView diedView) {
-		this.dieView = diedView;
-		this.fightView = fightView;
+	public FightController(GetLootController getLootController, ComplexView<String> fightGuiView, SimpleView diedGuiView, ComplexView<String> fightConsoleView, SimpleView diedConsoleView) {
+		fightViewManager.put(1, fightGuiView);
+		fightViewManager.put(2, fightConsoleView);
+		dieViewManager.put(1, diedGuiView);
+		dieViewManager.put(2, diedConsoleView);
 		this.getLootController = getLootController;
 	}
 
@@ -34,18 +38,18 @@ public class FightController extends AbstractController {
 		swap(context.getHero(), monster);
 		while (first.getHpCur() > 0 && sec.getHpCur() > 0) {
 			try {
-				Thread.sleep(300);
+				Thread.sleep(600);
 			} catch (InterruptedException e) {
 
 			}
 			swap(context.getHero(), monster);
 			int damage = sec.getDefense() - first.getDamage() > 0 ? 0 : sec.getDefense() - first.getDamage();
 			sec.setHpCur(sec.getHpCur() + damage);
-			fightView.render(first.getName() + " hits " + sec.getName() + " with " +
+			fightViewManager.get(context.getSequence()).render(first.getName() + " hits " + sec.getName() + " with " +
 					damage * -1 + " " + sec.getName() +
 					" current hp = " + sec.getHpCur() + "/" + sec.getHpMax());
 		}
-		if (fightView.getClass().equals(FightGuiView.class)){
+		if (fightViewManager.get(context.getSequence()).getClass().equals(FightGuiView.class)) {
 			TestPanel.panel.removeAll();
 			TestPanel.panel.revalidate();
 			TestPanel.panel.repaint();
@@ -54,7 +58,7 @@ public class FightController extends AbstractController {
 			getLootController.process();
 			context.getHero().updateConditions();
 		} else {
-			dieView.render();
+			dieViewManager.get(context.getSequence()).render();
 			try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e) {

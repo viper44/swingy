@@ -33,10 +33,12 @@ public class GetLootController extends AbstractController {
 	@Transient
 	final Map<Class<? extends Equipment>, Handler> equipSetter = new HashMap<>();
 	ArrayList<Equipment> equipment;
-	LootComplexView<Equipment> lootView;
+	Map<Integer, LootComplexView<Equipment>> lootViewManager = new HashMap<>();
 
-	public GetLootController(LootComplexView lootView) {
-		this.lootView = lootView;
+	public GetLootController(LootComplexView<Equipment> lootGuiView, LootComplexView<Equipment> lootConsoleView)
+	{
+		lootViewManager.put(1, lootGuiView);
+		lootViewManager.put(2, lootConsoleView);
 	}
 
 	private static <W extends Equipment> W lootGen() {
@@ -59,8 +61,8 @@ public class GetLootController extends AbstractController {
 				if (eq.getClass().equals(context.getHero().getWeapon().getClass()) |
 						eq.getClass().equals(context.getHero().getArmor().getClass()) |
 						eq.getClass().equals(context.getHero().getHelmet().getClass())) {
-					lootView.render(eq, context);
-					String answer = lootView.readUserInput().toLowerCase();
+					lootViewManager.get(context.getSequence()).render(eq, context);
+					String answer = lootViewManager.get(context.getSequence()).readUserInput().toLowerCase();
 					if (answer.equals("y") || answer.equals("yes")) {
 						equipSetter.get(eq.getClass()).handle(eq);
 					}
