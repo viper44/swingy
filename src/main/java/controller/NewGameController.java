@@ -1,8 +1,5 @@
 package controller;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import model.characters.hero.Coordinates;
@@ -12,54 +9,62 @@ import model.characters.hero.HeroClass;
 import model.dto.NewHeroRequest;
 import view.SimpleView;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NewGameController extends AbstractController implements Supporter {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    SimpleView nameView;
-    SimpleView typeView;
+	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	Map<Integer, SimpleView> nameManger = new HashMap<>();
+	Map<Integer, SimpleView> typeManager = new HashMap<>();
 
-    public NewGameController(SimpleView nameView, SimpleView typeView) {
-        this.nameView = nameView;
-        this.typeView = typeView;
-    }
+	public NewGameController(SimpleView nameGuiView, SimpleView typeGuiView, SimpleView nameConsoleView, SimpleView typeConsoleView) {
+		nameManger.put(1, nameGuiView);
+		nameManger.put(2, nameConsoleView);
+		typeManager.put(1, typeGuiView);
+		typeManager.put(2, typeConsoleView);
+	}
 
-    public void process() {
+	public void process() {
 
-    }
+	}
 
-    private String getHeroName() {
-        nameView.render();
-        return nameView.readUserInput();
-    }
+	private String getHeroName() {
+		nameManger.get(context.getSequence()).render();
+		return nameManger.get(context.getSequence()).readUserInput();
+	}
 
-    private boolean isValid(NewHeroRequest newHeroRequest) {
-        Validator validator = factory.getValidator();
-        return validator.validate(newHeroRequest).isEmpty();
-    }
+	private boolean isValid(NewHeroRequest newHeroRequest) {
+		Validator validator = factory.getValidator();
+		return validator.validate(newHeroRequest).isEmpty();
+	}
 
-    @Override
-    public int supProcess() {
-        String heroName = getHeroName();
+	@Override
+	public int supProcess() {
+		String heroName = getHeroName();
 
-        NewHeroRequest newHeroRequest = new NewHeroRequest()
-                .setName(heroName);
-        while (!isValid(newHeroRequest)) {
-            heroName = getHeroName();
-            newHeroRequest.setName(heroName);
-        }
-        typeView.render();
-        String heroType = typeView.readUserInput();
+		NewHeroRequest newHeroRequest = new NewHeroRequest()
+				.setName(heroName);
+		while (!isValid(newHeroRequest)) {
+			heroName = getHeroName();
+			newHeroRequest.setName(heroName);
+		}
+		typeManager.get(context.getSequence()).render();
+		String heroType = typeManager.get(context.getSequence()).readUserInput();
 
-        Hero hero = new HeroBuilder()
-                .heroName(heroName)
-                .exp(0)
-                .coordinates(new Coordinates(5, 5))
-                .level(1)
-                .build(HeroClass.valueOf(heroType.toUpperCase()));
+		Hero hero = new HeroBuilder()
+				.heroName(heroName)
+				.exp(0)
+				.coordinates(new Coordinates(5, 5))
+				.level(1)
+				.build(HeroClass.valueOf(heroType.toUpperCase()));
 
-        hero.initEquip();
-        context.setHero(hero);
-        return 1;
-    }
+		hero.initEquip();
+		context.setHero(hero);
+		return 1;
+	}
 }

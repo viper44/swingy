@@ -19,13 +19,15 @@ import view.cons.MoveConsoleView;
 public class MoveController extends AbstractController {
 	Map<String, Runnable> actionList = new HashMap<>();
 	UnaryOperator<Integer> getMapSize = i -> (i - 1) * 5 + 10 - (i % 2);
-	MoveViewComplex moveView;
-	SimpleView view;
+	Map<Integer, MoveViewComplex> moveManager = new HashMap<>();
+	Map<Integer, SimpleView> winManager = new HashMap<>();
 
-	public MoveController(MoveViewComplex moveView, SimpleView view) {
-		this.moveView = moveView;
-		this.view = view;
 
+	public MoveController(MoveViewComplex moveGuiView, SimpleView winGuiView, MoveViewComplex moveConsoleView, SimpleView winConsoleView) {
+		moveManager.put(1, moveGuiView);
+		moveManager.put(2, moveConsoleView);
+		winManager.put(1, winGuiView);
+		winManager.put(2, winConsoleView);
 		actionList.put("south", this::goSouth);
 		actionList.put("north", this::goNorth);
 		actionList.put("west", this::goWest);
@@ -37,10 +39,10 @@ public class MoveController extends AbstractController {
 	public void process() {
 
 		Integer size = getMapSize.apply(context.getHero().getLevel());
-		moveView.drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
+		moveManager.get(context.getSequence()).drawMap(size, context.getHero().getCoordinates().getX(), context.getHero().getCoordinates().getY(), context);
 		context.setPreviousX(context.getHero().getCoordinates().getX());
 		context.setPreviousY(context.getHero().getCoordinates().getY());
-		String selectedWay = moveView.readUserInput().toLowerCase();
+		String selectedWay = moveManager.get(context.getSequence()).readUserInput().toLowerCase();
 		if (selectedWay.equals("menu")) {
 			menuController.process();
 			this.process();
@@ -48,7 +50,7 @@ public class MoveController extends AbstractController {
 		actionList.get(selectedWay).run();
 		if(context.getHero().getCoordinates().getX() == size + 1 || context.getHero().getCoordinates().getX() == 0 ||
 				context.getHero().getCoordinates().getY() == 0 || context.getHero().getCoordinates().getY() == size + 1){
-			view.render();
+			winManager.get(context.getSequence()).render();
 			try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e) {
